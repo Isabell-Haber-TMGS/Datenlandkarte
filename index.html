@@ -545,6 +545,48 @@ aside.card * {
   align-items: flex-start !important;
 }
 
+
+
+/* === GitHub-Layoutfix: Datenpopup wie in der Standalone-Datei (kein schmaler System-Chip / keine vertikale Buchstaben-Stapelung) === */
+.data-row{
+  display:grid !important;
+  grid-template-columns: max-content minmax(0, 1fr) !important;
+  align-items:start !important;
+  justify-content: unset !important;
+  gap:12px !important;
+}
+
+.type-chip{
+  max-width: 220px !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+}
+
+.data-sys{ min-width: 0 !important; }
+
+/* Überschreibt die sehr aggressive 'anywhere'-Umbruchlogik nur für System-Chips */
+.sys-chip{
+  display:inline-flex !important;
+  flex-direction: column !important;
+  align-items: flex-start !important;
+  justify-content: flex-start !important;
+  text-align: left !important;
+
+  white-space: normal !important;
+  overflow: visible !important;
+  text-overflow: unset !important;
+
+  overflow-wrap: break-word !important;
+  word-break: normal !important;
+  width: 100% !important;
+  max-width: 100% !important;
+}
+
+/* Unterzeile darf sauber umbrechen */
+.sys-chip .sys-sub{
+  white-space: normal !important;
+}
 </style>
 </head>
 <body>
