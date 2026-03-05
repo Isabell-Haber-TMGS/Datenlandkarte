@@ -595,6 +595,45 @@ aside.card * {
   text-overflow: unset !important;
 }
 
+
+
+/* === LAYOUT-FIX v2: keine vertikale Buchstaben-Stapelung, keine Abschneidung === */
+.data-row{
+  display: grid !important;
+  grid-template-columns: max-content 1fr !important;
+  align-items: center !important;
+  justify-content: unset !important;
+  gap: 12px !important;
+}
+
+.type-chip{
+  max-width: 220px !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+}
+
+.sys-chip{
+  /* nicht mehr "anywhere" -> verhindert Buchstabenstapelung */
+  overflow-wrap: break-word !important;
+  word-break: normal !important;
+
+  /* Inhalt links, normale Höhe */
+  display: inline-flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+
+  /* kein Abschneiden */
+  white-space: normal !important;
+  overflow: visible !important;
+  text-overflow: unset !important;
+
+  /* Breite nutzt Restspalte */
+  width: 100% !important;
+  max-width: 100% !important;
+}
+
 </style>
 </head>
 <body>
