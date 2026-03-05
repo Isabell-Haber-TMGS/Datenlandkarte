@@ -705,23 +705,32 @@ dataPopup.classList.add('is-open');
         }[c]));
       }
 
-      function formatSystem(sys){
-  const parts = String(sys || '').split(',');
-  const main = (parts.shift() || '').trim();
-  const rest = parts.join(',').trim();
+      
+  function sanitizeValue(v){
+    // remove surrounding straight/curly quotes and trim
+    let s = String(v ?? '').trim();
+    s = s.replace(/^[\"'“”]+/, '').replace(/[\"'“”]+$/, '').trim();
+    return s;
+  }
 
-  if(!rest){
+function formatSystem(sys){
+  // Mehrere Systeme pro Zeile erlauben (kommagetrennt)
+  // Beispiele: "SaTourN, tw. Feratel Deskline®, Destination Solution"
+  const raw = sanitizeValue(sys);
+  const parts = raw.split(',').map(s => sanitizeValue(s)).filter(Boolean);
+
+  if(parts.length <= 1){
+    const one = parts[0] || '';
     return `
       <div class="sys-stack">
-        <span class="sys-chip">${escapeHtml(main)}</span>
+        <span class="sys-chip">${escapeHtml(one)}</span>
       </div>
     `;
   }
 
   return `
     <div class="sys-stack">
-      <span class="sys-chip">${escapeHtml(main)}</span>
-      <span class="sys-chip sys-sub-chip">${escapeHtml(rest)}</span>
+      ${parts.map(p => `<span class="sys-chip">${escapeHtml(p)}</span>`).join('')}
     </div>
   `;
 }
