@@ -104,6 +104,7 @@ body{
   /* Linien/Umrisse ohne Flächenfüllung */
   .region .grenze { fill: none; stroke: #ffffff; stroke-width: 1.5; stroke-linejoin: round; }
 
+
 /* Leipzig (Stadt) – interne Abgrenzung innerhalb Leipzig Region */
 .region .innerline{
   fill: none;
@@ -115,6 +116,7 @@ body{
 }
 .region.is-hover .innerline{ stroke: var(--stroke-hover); }
 .region.is-active .innerline{ stroke: rgba(255, 210, 80, .75); }
+
 
       /* allow Leipzig Stadt to be clickable separately */
       #leipzig .hit { pointer-events: none; }
@@ -171,6 +173,7 @@ body{
   white-space:normal;
 }
 
+
 /* Fix: prevent footer/text overlay by making the regions list panel a flex column with a scrollable list */
 .panel.list-panel{
   display:flex;
@@ -183,6 +186,7 @@ body{
   overflow-x:hidden;
 }
 
+
 /* Allow regions list to use full available height without forced scrollbar */
 .panel.list-panel{
   flex:1 1 auto;
@@ -190,6 +194,7 @@ body{
 .panel.list-panel .list{
   overflow-y:visible;
 }
+
 
 /* Final fix: ensure regions list fills full height and no internal scrollbar */
 .panel.list-panel{
@@ -202,10 +207,13 @@ body{
   overflow:visible !important;
 }
 
+
 /* Variante A: Popup oberhalb der Liste; Liste darf ohne interne Scrollbar wachsen */
 .panel.list-panel .list{
   overflow:visible !important;
 }
+
+
 
 /* popup overlay safety */
 .map-wrap{ position:relative; }
@@ -228,10 +236,12 @@ aside{
   padding-top: 6px !important;
 }
 
+
 /* === Panel/Listenbereich weiter nach oben (v2) === */
 .card > div[style*="display:grid"]{ align-content:start !important; }
 .panel{ margin-top:0 !important; }
 .panel.list-panel{ margin-top:0 !important; }
+
 
 /* === Daten-Popup in rechter Spalte unter Chip === */
 aside.card .data-popup{
@@ -245,12 +255,14 @@ aside.card .data-popup{
 .data-popup{ display:none !important; }
 .data-popup.is-open{ display:block !important; }
 
+
 /* === Sidebar/Pupup Lesbarkeit & kein Abschneiden === */
 aside.card{ overflow:auto; max-height: calc(100vh - 16px); }
 aside.card .data-popup{ overflow:visible; }
 aside.card .table-wrap{ overflow:auto; }
 aside.card .data-table{ width:100%; table-layout:fixed; }
 aside.card .data-table th, aside.card .data-table td{ word-break:break-word; white-space:normal; }
+
 
 /* === Popup ausschließlich rechts in der Sidebar darstellen === */
 .map-wrap .data-popup{ display:none !important; }
@@ -279,6 +291,7 @@ aside.card .data-popup.is-open{
 .data-table colgroup col:last-child{
   width:65%;
 }
+
 
 /* === Datenarten: Flex-Layout statt Tabellen-Spalten (verhindert Vollbreiten-"Chips") === */
 .data-list{
@@ -415,6 +428,8 @@ aside.card * {
   box-sizing: border-box;
 }
 
+
+
 /* =========================================
    Einheitliche Schriftgröße für Sidebar-Chips/Buttons
    ========================================= */
@@ -427,6 +442,8 @@ aside.card * {
   line-height: 1.2 !important;
   flex-shrink: 0;
 }
+
+
 
 /* =========================================
    Größere Schrift ohne Layout-Verschiebung
@@ -441,6 +458,8 @@ aside.card * {
   padding-bottom: 6px !important;
 }
 
+
+
 /* =========================================
    Kein Zeilenumbruch in Buttons/Chips
    ========================================= */
@@ -451,6 +470,8 @@ aside.card * {
   text-overflow: ellipsis !important;
   padding: 4px 8px !important; /* kompakter, verhindert Höhenwachstum */
 }
+
+
 
 /* =========================================
    Fix: Ellipsis funktioniert auch bei Type-Chips (kein Abschneiden ohne …)
@@ -463,6 +484,8 @@ aside.card * {
   text-overflow: ellipsis !important;
   vertical-align: middle;
 }
+
+
 
 /* =========================================
    Spaltenabstand anpassen:
@@ -489,6 +512,8 @@ aside.card * {
   justify-content: flex-end !important;
 }
 
+
+
 /* =========================================
    Korrektur: Buttons NICHT rechts zentrieren
    Nur rechte Spalte weiter nach rechts schieben
@@ -513,6 +538,8 @@ aside.card * {
   gap: 24px !important;
   justify-content: flex-start !important;
 }
+
+
 
 /* =========================================
    Tabellenansicht: Datenart-Spalte breiter,
@@ -545,6 +572,29 @@ aside.card * {
   align-items: flex-start !important;
 }
 
+
+
+/* === FIX: Datenpopup-Chips nicht abschneiden (z.B. Dresden Stadt) === */
+.data-row{
+  flex-wrap: wrap !important;
+  align-items: flex-start !important;
+}
+.type-chip{
+  flex: 0 0 auto !important;
+  max-width: 100% !important;
+  white-space: normal !important;
+  overflow: visible !important;
+  text-overflow: unset !important;
+}
+.sys-chip{
+  flex: 1 1 260px !important;
+  min-width: 0 !important;
+  max-width: 100% !important;
+  white-space: normal !important;
+  overflow: visible !important;
+  text-overflow: unset !important;
+}
+
 </style>
 </head>
 <body>
@@ -570,6 +620,7 @@ aside.card * {
 </div>
 </div>
 <div aria-live="polite" class="data-popup" id="dataPopup">
+<button aria-label="Popup schließen" class="btn close" id="dataCloseBtn" type="button">×</button>
 <h2 id="dataPopupTitle">Datenübersicht</h2>
 <div class="meta" id="dataPopupHint"></div>
 <div aria-label="Datenarten und Pflegesysteme" class="data-list" id="dataPopupList"></div>
@@ -577,7 +628,9 @@ aside.card * {
 </aside>
 <script></script>
 <script>function initApp(){
-// DATA_CATALOG is provided by CSV loader
+// DATA_CATALOG wird aus CSV geladen (window.DATA_CATALOG)
+const DATA_CATALOG = window.DATA_CATALOG || {};
+
 (function(){
       const svg = document.getElementById('sachsenMap');
       const tooltip = document.getElementById('tooltip');
@@ -589,10 +642,12 @@ const dataPopup = document.getElementById('dataPopup');
       const dataPopupTitle = document.getElementById('dataPopupTitle');
       const dataPopupHint = document.getElementById('dataPopupHint');
       const dataPopupList = document.getElementById('dataPopupList');
+      const dataCloseBtn = document.getElementById('dataCloseBtn');
 // Ansprechpartner (werden erst nach Regionsauswahl eingeblendet)
 const contactCard  = document.getElementById('contactCard');
 const contactName  = document.getElementById('contactName');
 const contactEmail = document.getElementById('contactEmail');
+
 
       // Datenkatalog: bitte nach Bedarf pro Region anpassen.
       // Struktur: regionId: [{ type: 'Datenart', system: 'Systemname' }, ...]
@@ -615,6 +670,10 @@ dataPopup.classList.add('is-open');
       function closeDataPopup(){
         dataPopup.classList.remove('is-open');
       }
+
+      dataCloseBtn.addEventListener('click', closeDataPopup);
+
+
       const regions = Array.from(svg.querySelectorAll('g.region[id]'));
   function svgToLocalPoint(evt) {
     const pt = svg.createSVGPoint();
@@ -645,6 +704,7 @@ dataPopup.classList.add('is-open');
     return hit ? hit.closest('g.region') : null;
   }
 
+
 // === Punkt 4: Auto-viewBox (gegen Abschneiden) ===
   (function fitViewBox(){
     // Wichtig: erst nachdem das SVG im DOM ist
@@ -662,6 +722,7 @@ dataPopup.classList.add('is-open');
           '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
         }[c]));
       }
+
 
       function formatSystem(sys){
   const parts = String(sys || '').split(',');
@@ -745,6 +806,7 @@ function buildList(){
   closeDataPopup();
       }
 
+
 // Ansprechpartner je Region (bitte Namen/E-Mails hier pflegen)
 const CONTACTS = {
   saechsisch:              { name: '', email: '' },
@@ -789,6 +851,7 @@ function selectById(id){
   if (contactName)  contactName.textContent  = `Ansprechpartner: ${c.name  || '–'}`;
   if (contactEmail) contactEmail.textContent = `E-Mail: ${c.email || '–'}`;
   if (contactCard)  contactCard.style.display = 'block';
+
 
   // Popup mit Datenarten/Systemen öffnen
   renderDataPopup(g.id, name);
@@ -849,18 +912,18 @@ function parseCSV(text){
   const lines = text.split(/\r?\n/).filter(l => l.trim().length);
   const header = lines.shift().split(',').map(h => h.trim());
   return lines.map(line => {
-    const cols = line.split(','); // keep CSV simple (no commas in fields)
+    const cols = line.split(','); // simple CSV; keine Kommas in Feldern
     const obj = {};
     header.forEach((h,i) => obj[h] = (cols[i] ?? '').trim());
     return obj;
   });
 }
 async function boot(){
-  // inline SVG
+  // SVG inline einbetten (Interaktion bleibt erhalten)
   const svgText = await loadText('sachsenkarte.svg');
   document.getElementById('mapWrap').innerHTML = svgText;
 
-  // load CSV -> DATA_CATALOG
+  // CSV laden -> DATA_CATALOG
   const csvText = await loadText('datenpopup.csv');
   const rows = parseCSV(csvText);
   const byRegion = {};
@@ -871,7 +934,6 @@ async function boot(){
   }
   window.DATA_CATALOG = byRegion;
 
-  // run app
   initApp();
 }
 document.addEventListener('DOMContentLoaded', () => {
