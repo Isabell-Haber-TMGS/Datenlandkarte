@@ -587,6 +587,31 @@ aside.card * {
 .sys-chip .sys-sub{
   white-space: normal !important;
 }
+
+/* === Multi-System-Optimierung: mehrere Pflegesysteme sauber als Chips, ohne Abschneiden === */
+.sys-stack{
+  display:flex !important;
+  flex-direction:row !important;
+  flex-wrap:wrap !important;
+  gap:6px !important;
+  align-items:flex-start !important;
+}
+.sys-chip{
+  /* Chip bleibt eine Zeile; bei sehr langen Begriffen mit … statt Buchstabenstapelung */
+  white-space:nowrap !important;
+  overflow:hidden !important;
+  text-overflow:ellipsis !important;
+  max-width:100% !important;
+  overflow-wrap:normal !important;
+  word-break:normal !important;
+}
+/* Sub-Chip (falls genutzt) wie normaler Chip behandeln */
+.sys-sub-chip{
+  white-space:nowrap !important;
+  overflow:hidden !important;
+  text-overflow:ellipsis !important;
+}
+
 </style>
 </head>
 <body>
@@ -714,9 +739,23 @@ dataPopup.classList.add('is-open');
   }
 
 function formatSystem(sys){
-  // Mehrere Systeme pro Zeile erlauben (kommagetrennt)
-  // Beispiele: "SaTourN, tw. Feratel Deskline®, Destination Solution"
-  const raw = sanitizeValue(sys);
+  // Mehrere Systeme pro Zeile erlauben.
+  // Unterstützte Trenner: ,  /  ;  |  " und "  "bzw."  "&"
+  // Beispiele:
+  // - "Outdooractive/ThüCAT"
+  // - "Elodis/Kulturserver/SaTourN"
+  // - "SaTourN, tw. Feratel Deskline® und Destination Solution"
+  let raw = sanitizeValue(sys);
+
+  // Typische Texttrenner normalisieren
+  raw = raw
+    .replace(/\s+und\s+/gi, ', ')
+    .replace(/\s+bzw\.\s+/gi, ', ')
+    .replace(/\s*&\s*/g, ', ')
+    .replace(/\s*\|\s*/g, ', ')
+    .replace(/\s*;\s*/g, ', ')
+    .replace(/\s*\/\s*/g, ', ');
+
   const parts = raw.split(',').map(s => sanitizeValue(s)).filter(Boolean);
 
   if(parts.length <= 1){
@@ -897,14 +936,49 @@ async function loadText(url){
   return await res.text();
 }
 function parseCSV(text){
+  // CSV-Parser mit Unterstützung für Anführungszeichen (RFC4180-ähnlich, ausreichend für unsere Datei)
+  // Unterstützt: Kommas in "..." sowie "" als Escaping.
   const lines = text.split(/\r?\n/).filter(l => l.trim().length);
-  const header = lines.shift().split(',').map(h => h.trim());
+  if(!lines.length) return [];
+  const header = parseCSVLine(lines.shift());
+
   return lines.map(line => {
-    const cols = line.split(','); // keep CSV simple (no commas in fields)
+    const cols = parseCSVLine(line);
     const obj = {};
     header.forEach((h,i) => obj[h] = (cols[i] ?? '').trim());
     return obj;
   });
+
+  function parseCSVLine(line){
+    const out = [];
+    let cur = '';
+    let inQuotes = false;
+    for(let i=0;i<line.length;i++){
+      const ch = line[i];
+      if(inQuotes){
+        if(ch === '"'){
+          // Escaped quote
+          if(i+1 < line.length && line[i+1] === '"'){
+            cur += '"'; i++;
+          }else{
+            inQuotes = false;
+          }
+        }else{
+          cur += ch;
+        }
+      }else{
+        if(ch === '"'){
+          inQuotes = true;
+        }else if(ch === ','){
+          out.push(cur); cur = '';
+        }else{
+          cur += ch;
+        }
+      }
+    }
+    out.push(cur);
+    return out;
+  }
 }
 async function boot(){
   // inline SVG
