@@ -244,23 +244,22 @@ aside.card{
 }
 
 .sys-stack{
-  display:flex;
+  display:inline-flex;
   flex-direction:column;
   gap:6px;
   align-items:stretch;
-  width:100%;
+  width:max-content;   /* Breite = längster Chip */
 }
 
 .sys-chip{
   display:block;
-  width:100%;
+  width:100%;          /* alle Chips gleich breit */
   padding:6px 10px;
   border-radius:999px;
   background:var(--chip-bg);
   border:1px solid var(--chip-border);
   font-weight:700;
   white-space:normal;
-  overflow:visible;
   text-align:center;
 }
 
