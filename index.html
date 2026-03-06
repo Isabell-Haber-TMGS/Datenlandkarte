@@ -1,42 +1,114 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Interaktive Sachsenkarte (DMO-Regionen)</title>
+
   <link rel="stylesheet" href="style.css">
+
+  <style>
+    /* Sicherheit: hidden immer wirklich verstecken */
+    [hidden]{
+      display:none !important;
+    }
+  </style>
 </head>
+
 <body>
-  <main class="card map-wrap">
-    <div id="tooltip" class="tooltip" role="status" aria-live="polite"></div>
-    <div id="mapWrap"></div>
-  </main>
 
-  <aside class="card">
-    <div class="panel" id="selectedCard">
-      <div class="row">
-        <div style="flex:1 1 auto; min-width:0;">
-          <div id="selectedName" style="font-weight:800;">Keine Region gewählt</div>
-          <div id="selectedMeta" class="small">Klicke auf eine Fläche in der Karte.</div>
+<main class="card map-wrap">
+
+  <div id="tooltip" class="tooltip" role="status" aria-live="polite"></div>
+
+  <div id="mapWrap"></div>
+
+</main>
+
+
+<aside class="card">
+
+  <!-- Region Auswahl -->
+  <div class="panel" id="selectedCard">
+
+    <div class="row">
+
+      <div style="flex:1 1 auto; min-width:0;">
+        <div id="selectedName" style="font-weight:800;">
+          Keine Region gewählt
         </div>
-        <button id="clearBtn" class="btn" type="button" title="Auswahl zurücksetzen">↺</button>
+
+        <div id="selectedMeta" class="small">
+          Klicke auf eine Fläche in der Karte.
+        </div>
       </div>
-      <div class="row" style="margin-top:6px;">
-        <button id="openBtn" class="btn" type="button" style="display:none;">Website öffnen</button>
-      </div>
-      <div id="contactCard" style="margin-top:8px; display:none;">
-        <div id="contactName" style="font-weight:600;">Ansprechpartner: –</div>
-        <div id="contactEmail" class="small">E-Mail: –</div>
-      </div>
+
+      <button
+        id="clearBtn"
+        class="btn"
+        type="button"
+        title="Auswahl zurücksetzen">
+        ↺
+      </button>
+
     </div>
 
-    <div id="dataPopup" class="data-popup" aria-live="polite">
-      <h2 id="dataPopupTitle">Datenübersicht</h2>
-      <div id="dataPopupHint" class="meta"></div>
-      <div id="dataPopupList" class="data-list" aria-label="Datenarten und Pflegesysteme"></div>
-    </div>
-  </aside>
 
-  <script src="script.js"></script>
+    <div class="row" style="margin-top:6px;">
+
+      <!-- Button initial versteckt -->
+      <button
+        id="openBtn"
+        class="btn"
+        type="button"
+        hidden
+        disabled>
+        Website öffnen
+      </button>
+
+    </div>
+
+
+    <!-- Ansprechpartner -->
+    <div id="contactCard" style="margin-top:8px; display:none;">
+
+      <div id="contactName" style="font-weight:600;">
+        Ansprechpartner: –
+      </div>
+
+      <div id="contactEmail" class="small">
+        E-Mail: –
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- Datenübersicht -->
+  <div
+    id="dataPopup"
+    class="data-popup"
+    aria-live="polite">
+
+    <h2 id="dataPopupTitle">
+      Datenübersicht
+    </h2>
+
+    <div id="dataPopupHint" class="meta"></div>
+
+    <div
+      id="dataPopupList"
+      class="data-list"
+      aria-label="Datenarten und Pflegesysteme">
+    </div>
+
+  </div>
+
+</aside>
+
+
+<script src="script.js"></script>
+
 </body>
 </html>
