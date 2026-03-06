@@ -546,3 +546,33 @@ aside.card * {
   border: 1px solid rgba(255,255,255,.08);
   color: var(--muted);
 }
+
+
+/* === Anpassungen: breitere rechte Spalte === */
+body{
+  grid-template-columns: 1fr 720px !important;
+}
+
+/* === Pflegesysteme untereinander === */
+.sys-stack{
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+  align-items:flex-start;
+  width:100%;
+}
+
+/* Jeder Pflegesystem-Chip eigene Zeile */
+.sys-chip{
+  display:block;
+  width:fit-content;
+  padding:6px 12px;
+  border-radius:999px;
+  background:rgba(0,0,0,.18);
+  border:1px solid rgba(255,255,255,.12);
+  font-weight:700;
+  white-space:normal;
+  text-align:center;
+  max-width:100%;
+  word-break:break-word;
+}
