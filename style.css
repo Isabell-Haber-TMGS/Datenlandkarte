@@ -249,15 +249,17 @@ aside.card{
 }
 
 .sys-chip{
-  display:inline-flex;
-  align-items:center;
-  justify-content:flex-start;
-  max-width:100%;
+  display:block;
+  width:100%;            /* gleiche Breite innerhalb der Region */
   padding:6px 10px;
   border-radius:999px;
   background:var(--chip-bg);
   border:1px solid var(--chip-border);
   font-weight:700;
+
+  white-space:normal;
+  text-align:center;
+}
 
   /* kein Abschneiden mehr */
   white-space:normal;
