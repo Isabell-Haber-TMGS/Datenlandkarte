@@ -1,4 +1,4 @@
-<svg aria-label="Sachsenkarte mit DMO-Regionen" id="sachsenMap" role="img" viewbox="0 0 1400 1100" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<svg xmlns="http://www.w3.org/2000/svg" aria-label="Sachsenkarte mit DMO-Regionen" id="sachsenMap" role="img" viewBox="0 0 1400 1100">
 <defs>
 <filter height="160%" id="softGlow" width="160%" x="-30%" y="-30%">
 <fegaussianblur result="blur" stddeviation="3"></fegaussianblur>
