@@ -1,822 +1,463 @@
 <!DOCTYPE html>
-
 <html lang="de">
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width,initial-scale=1" name="viewport"/>
-<title>Interaktive Sachsenkarte (DMO-Regionen)</title>
-<style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Interaktive Sachsenkarte (DMO-Regionen)</title>
+  <style>
     :root{
-      --bg:#0b0f1a; --text:#e8eefc; --muted:#a9b6d6;
-      --stroke:rgba(255,255,255,.28); --stroke-hover:rgba(255,255,255,.55);
+      --bg:#0b0f1a;
+      --text:#e8eefc;
+      --muted:#a9b6d6;
+      --stroke:rgba(255,255,255,.28);
+      --stroke-hover:rgba(255,255,255,.55);
       --shadow:0 10px 30px rgba(0,0,0,.35);
+      --panel-bg:rgba(0,0,0,.18);
+      --chip-bg:rgba(0,0,0,.18);
+      --chip-border:rgba(255,255,255,.12);
     }
-    html,body{height:100%}
-    
-    /* Prevent layout shift when content toggles causes page scrollbar to appear/disappear */
+    html, body { height:100%; }
     html { scrollbar-gutter: stable; }
-    /* Fallback for browsers without scrollbar-gutter support */
-    body { overflow-y: scroll; }
-
-body{
-      margin:0; padding:16px; box-sizing:border-box;
+    body{
+      margin:0;
+      padding:16px;
+      box-sizing:border-box;
+      overflow-y:scroll;
       font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
       background:radial-gradient(1200px 700px at 20% 10%, #172244, var(--bg));
       color:var(--text);
-      display:grid; grid-template-columns: 1fr 580px; gap:16px;
+      display:grid;
+      grid-template-columns:1fr 520px;
+      gap:16px;
     }
+    * { box-sizing:border-box; }
     .card{
       background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
       border:1px solid rgba(255,255,255,.08);
-      border-radius:16px; box-shadow:var(--shadow);
-      overflow:hidden; min-height:0;
+      border-radius:16px;
+      box-shadow:var(--shadow);
+      min-height:0;
+      overflow:hidden;
     }
     .map-wrap{
       position:relative;
       display:grid;
-      grid-template-rows: minmax(0, 1fr) auto;
+      grid-template-rows:minmax(0, 1fr) auto;
       gap:10px;
-      align-items:stretch;
-      justify-items:stretch;
       padding:10px;
       height:calc(100vh - 32px);
     }
-    svg{ width:min(750px,100%); height:auto; display:block; user-select:none; }
-    .map-wrap svg{ justify-self:center; }
-    /* Daten-Übersicht unten rechts im Karten-Frame */
-    .region .flaeche,.region .hit{ cursor:pointer; vector-effect:non-scaling-stroke; pointer-events:fill; }
-    .region image, .region .logo, .region .label { pointer-events:none; }
+    #mapWrap{
+      display:grid;
+      justify-items:center;
+      align-items:start;
+      min-height:0;
+    }
+    #mapWrap svg{
+      width:min(750px, 100%);
+      height:auto;
+      display:block;
+      user-select:none;
+    }
+    .tooltip{
+      position:absolute;
+      transform:translate(-9999px,-9999px);
+      padding:10px 12px;
+      border-radius:12px;
+      background:rgba(10,14,26,.92);
+      border:1px solid rgba(255,255,255,.14);
+      color:var(--text);
+      font-size:13px;
+      line-height:1.25;
+      box-shadow:var(--shadow);
+      pointer-events:none;
+      white-space:nowrap;
+      max-width:260px;
+      z-index:10;
+    }
+    .tooltip .muted{
+      color:var(--muted);
+      font-size:12px;
+      display:block;
+      margin-top:2px;
+    }
+    .region .flaeche,.region .hit{
+      cursor:pointer;
+      vector-effect:non-scaling-stroke;
+      pointer-events:fill;
+    }
+    .region image,.region .logo,.region .label{ pointer-events:none; }
     .region .flaeche{
       fill:rgba(110,160,255,.18);
-      stroke:var(--stroke); stroke-width:1.5;
+      stroke:var(--stroke);
+      stroke-width:1.5;
       transition:fill .18s ease, stroke .18s ease, filter .18s ease, opacity .18s ease;
     }
     .region .hit{ fill:transparent; stroke:transparent; stroke-width:18; }
+    .region .grenze{
+      fill:none;
+      stroke:#ffffff;
+      stroke-width:1.5;
+      stroke-linejoin:round;
+    }
+    .region .innerline{
+      fill:none;
+      stroke:var(--stroke);
+      stroke-width:1.2;
+      vector-effect:non-scaling-stroke;
+      pointer-events:none;
+      opacity:.9;
+    }
     .region.is-hover .flaeche{
-      fill:rgba(110,160,255,.30); stroke:var(--stroke-hover);
+      fill:rgba(110,160,255,.30);
+      stroke:var(--stroke-hover);
       filter:drop-shadow(0 8px 18px rgba(0,0,0,.28));
     }
-    .region.is-active .flaeche{ fill:rgba(255,210,80,.32); stroke:rgba(255,210,80,.75); }
+    .region.is-hover .innerline{ stroke:var(--stroke-hover); }
+    .region.is-active .flaeche{
+      fill:rgba(255,210,80,.32);
+      stroke:rgba(255,210,80,.75);
+    }
+    .region.is-active .innerline{ stroke:rgba(255,210,80,.75); }
     svg.has-selection .region:not(.is-active) .flaeche{ opacity:.40; }
-    .tooltip{
-      position:absolute; transform:translate(-9999px,-9999px);
-      padding:10px 12px; border-radius:12px;
-      background:rgba(10,14,26,.92);
-      border:1px solid rgba(255,255,255,.14);
-      color:var(--text); font-size:13px; line-height:1.25;
-      box-shadow:var(--shadow); pointer-events:none; white-space:nowrap; max-width:260px;
-    }
-    .tooltip .muted{ color:var(--muted); font-size:12px; display:block; margin-top:2px; }
+    #leipzig .hit { pointer-events:none; }
+    #chemnitz_zwickau_region .hit { pointer-events:none; }
 
-    aside{ display:flex; flex-direction:column; gap:12px; padding:14px; }
-    h1{ font-size:16px; margin:0; letter-spacing:.2px; }
-    .small{ color:var(--muted); font-size:12px; margin-top:4px; }
-    .panel{
-      background:rgba(0,0,0,.18);
-      border:1px solid rgba(255,255,255,.08);
-      border-radius:12px; padding:12px;
+    aside.card{
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+      padding:14px;
+      overflow:auto;
+      max-height:calc(100vh - 32px);
     }
-    .row{ display:flex; gap:8px; align-items:center; justify-content:flex-start; }
+    .panel{
+      background:var(--panel-bg);
+      border:1px solid rgba(255,255,255,.08);
+      border-radius:12px;
+      padding:12px;
+    }
+    .row{
+      display:flex;
+      gap:10px;
+      align-items:flex-start;
+      justify-content:flex-start;
+    }
+    .small{
+      color:var(--muted);
+      font-size:12px;
+      margin-top:4px;
+    }
     .btn{
-      appearance:none; border:1px solid rgba(255,255,255,.14);
-      background:rgba(255,255,255,.06); color:var(--text);
-      border-radius:12px; padding:10px 12px; cursor:pointer; font-weight:600;
+      appearance:none;
+      border:1px solid rgba(255,255,255,.14);
+      background:rgba(255,255,255,.06);
+      color:var(--text);
+      border-radius:12px;
+      padding:10px 12px;
+      cursor:pointer;
+      font-weight:600;
+      line-height:1.2;
       transition:transform .05s ease, background .15s ease;
     }
     .btn:active{ transform:translateY(1px); }
     .btn:hover{ background:rgba(255,255,255,.10); }
-    .list{ display:grid; gap:8px; flex:1 1 auto; overflow:visible !important; }
-    .chip{
-      display:flex; justify-content:space-between; align-items:center; gap:8px;
-      padding:10px 10px; border-radius:12px;
-      border:1px solid rgba(255,255,255,.10);
-      background:rgba(0,0,0,.18); cursor:pointer; user-select:none;
-    }
-    .chip:hover{ background:rgba(0,0,0,.25); }
-    .chip .id{ color:var(--muted); font-size:12px; display:none }
-    .footer{ color:var(--muted); font-size:12px; padding-top:6px; }
 
+    .data-popup{
+      display:none;
+      background:rgba(0,0,0,.22);
+      border:1px solid rgba(255,255,255,.10);
+      border-radius:14px;
+      padding:12px;
+      width:100%;
+      max-width:none;
+    }
+    .data-popup.is-open{ display:block; }
+    .data-popup h2{
+      font-size:14px;
+      margin:0 0 8px 0;
+    }
+    .data-popup .meta{
+      color:var(--muted);
+      font-size:12px;
+      margin-top:2px;
+      margin-bottom:10px;
+    }
+    .data-list{
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+    }
+    .data-row{
+      display:grid;
+      grid-template-columns:minmax(120px, 220px) minmax(0, 1fr);
+      gap:12px;
+      align-items:start;
+      padding:10px 12px;
+      border-radius:14px;
+      background:rgba(255,255,255,.04);
+      border:1px solid rgba(255,255,255,.08);
+    }
+    .type-chip{
+      display:inline-block;
+      max-width:100%;
+      padding:6px 10px;
+      border-radius:999px;
+      background:var(--chip-bg);
+      border:1px solid var(--chip-border);
+      font-weight:700;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      vertical-align:middle;
+    }
+    .data-sys{ min-width:0; }
+    .sys-stack{
+      display:flex;
+      flex-direction:row;
+      flex-wrap:wrap;
+      gap:6px;
+      align-items:flex-start;
+    }
+    .sys-chip{
+      display:inline-flex;
+      align-items:center;
+      justify-content:flex-start;
+      max-width:100%;
+      padding:6px 10px;
+      border-radius:999px;
+      background:var(--chip-bg);
+      border:1px solid var(--chip-border);
+      font-weight:700;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      overflow-wrap:normal;
+      word-break:normal;
+    }
     @media (max-width:980px){
       body{ grid-template-columns:1fr; }
-      svg{ }
+      .map-wrap{ height:auto; min-height:60vh; }
+      aside.card{ max-height:none; }
+      .data-row{ grid-template-columns:minmax(110px, 180px) minmax(0, 1fr); }
     }
-  
-  /* Linien/Umrisse ohne Flächenfüllung */
-  .region .grenze { fill: none; stroke: #ffffff; stroke-width: 1.5; stroke-linejoin: round; }
-
-/* Leipzig (Stadt) – interne Abgrenzung innerhalb Leipzig Region */
-.region .innerline{
-  fill: none;
-  stroke: var(--stroke);
-  stroke-width: 1.2;
-  vector-effect: non-scaling-stroke;
-  pointer-events: none;
-  opacity: .9;
-}
-.region.is-hover .innerline{ stroke: var(--stroke-hover); }
-.region.is-active .innerline{ stroke: rgba(255, 210, 80, .75); }
-
-      /* allow Leipzig Stadt to be clickable separately */
-      #leipzig .hit { pointer-events: none; }
-      /* allow Chemnitz Stadt to be clickable separately */
-      #chemnitz_zwickau_region .hit { pointer-events: none; }
-
-/* Rechts: Daten-Popup */
-.data-popup{
-  display:none;
-  background:rgba(0,0,0,.22);
-  border:1px solid rgba(255,255,255,.10);
-  border-radius:14px;
-  padding:12px;
-}
-.data-popup.is-open{ display:block; }
-.data-popup h2{ font-size:14px; margin:0 0 8px 0; }
-.data-popup .meta{ color:var(--muted); font-size:12px; margin-top:2px; }
-.data-popup .close{
-  float:right;
-  margin-top:-2px;
-  border-radius:10px;
-  padding:6px 8px;
-  font-weight:700;
-}
-.data-table{
-  width:100%;
-  border-collapse:separate;
-  border-spacing:0 8px;
-}
-.data-table th{
-  text-align:left;
-  font-size:12px;
-  color:var(--muted);
-  font-weight:700;
-  padding:0 6px 4px 6px;
-}
-.data-table td{
-  background:rgba(255,255,255,.04);
-  border:1px solid rgba(255,255,255,.08);
-  border-radius:12px;
-  padding:10px 10px;
-  vertical-align:top;
-}
-.data-table .sys{
-  white-space:nowrap;
-  font-weight:700;
-}
-
-.data-table .sys .sys-sub{
-  display:block;
-  font-weight:500;
-  opacity:.85;
-  margin-top:4px;
-  white-space:normal;
-}
-
-/* Fix: prevent footer/text overlay by making the regions list panel a flex column with a scrollable list */
-.panel.list-panel{
-  display:flex;
-  flex-direction:column;
-  min-height:0;
-}
-.panel.list-panel .list{
-  flex:1 1 auto;
-  min-height:0;
-  overflow-x:hidden;
-}
-
-/* Allow regions list to use full available height without forced scrollbar */
-.panel.list-panel{
-  flex:1 1 auto;
-}
-.panel.list-panel .list{
-  overflow-y:visible;
-}
-
-/* Final fix: ensure regions list fills full height and no internal scrollbar */
-.panel.list-panel{
-  flex:1 1 auto;
-  display:flex;
-  flex-direction:column;
-}
-.panel.list-panel .list{
-  flex:1 1 auto;
-  overflow:visible !important;
-}
-
-/* Variante A: Popup oberhalb der Liste; Liste darf ohne interne Scrollbar wachsen */
-.panel.list-panel .list{
-  overflow:visible !important;
-}
-
-/* popup overlay safety */
-.map-wrap{ position:relative; }
-
-/* === Panel nach oben ziehen (Header entfernt) === */
-aside{
-  padding-top: 6px !important;
-  gap: 8px !important;
-}
-
-.panel{
-  margin-top: 0 !important;
-}
-
-#selectedCard{
-  margin-top: 0 !important;
-}
-
-.panel.list-panel{
-  padding-top: 6px !important;
-}
-
-/* === Panel/Listenbereich weiter nach oben (v2) === */
-.card > div[style*="display:grid"]{ align-content:start !important; }
-.panel{ margin-top:0 !important; }
-.panel.list-panel{ margin-top:0 !important; }
-
-/* === Daten-Popup in rechter Spalte unter Chip === */
-aside.card .data-popup{
-  position: static !important;
-  right:auto !important;
-  bottom:auto !important;
-  width:100% !important;
-  max-width:none !important;
-  margin-top: 12px;
-}
-.data-popup{ display:none !important; }
-.data-popup.is-open{ display:block !important; }
-
-/* === Sidebar/Pupup Lesbarkeit & kein Abschneiden === */
-aside.card{ overflow:auto; max-height: calc(100vh - 16px); }
-aside.card .data-popup{ overflow:visible; }
-aside.card .table-wrap{ overflow:auto; }
-aside.card .data-table{ width:100%; table-layout:fixed; }
-aside.card .data-table th, aside.card .data-table td{ word-break:break-word; white-space:normal; }
-
-/* === Popup ausschließlich rechts in der Sidebar darstellen === */
-.map-wrap .data-popup{ display:none !important; }
-
-aside.card .data-popup{
-  display:none;
-  position:static !important;
-  width:100% !important;
-  max-width:none !important;
-  margin-top:12px;
-}
-
-aside.card .data-popup.is-open{
-  display:block !important;
-}
-/* === Daten-Tabelle: linke Spalte schmaler === */
-.data-table{
-  width:100%;
-  table-layout:fixed;
-}
-
-.data-table colgroup col:first-child{
-  width:35%;
-}
-
-.data-table colgroup col:last-child{
-  width:65%;
-}
-
-/* === Datenarten: Flex-Layout statt Tabellen-Spalten (verhindert Vollbreiten-"Chips") === */
-.data-list{
-  display:flex;
-  flex-direction:column;
-  gap:10px;
-}
-
-/* Jede Zeile wirkt wieder „geordnet“ */
-.data-row{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:12px;
-  padding:10px 14px;
-  border-radius:14px;
-  background:rgba(255,255,255,.04);
-  border:1px solid rgba(255,255,255,.08);
-}
-/* Datenart als Chip mit fixer „Spaltenbreite“ */
-.type-chip{
-  flex:0 0 150px;          /* Breite der Chip-Spalte */
-  display:inline-flex;
-  align-items:center;
-  justify-content:flex-start;
-  padding:6px 10px;
-  border-radius:999px;
-  background:rgba(0,0,0,.18);
-  border:1px solid rgba(255,255,255,.12);
-  font-weight:700;
-  white-space:nowrap;
-  overflow:hidden;
-  text-overflow:ellipsis;
-}
-
-/* System-Spalte */
-.data-sys{
-  flex:1 1 auto;
-  min-width:0;
-  display:flex;
-  justify-content:flex-start; /* links ausrichten */
-}
-/* Pflegesystem ebenfalls als Chip */
-.sys-chip{
-  display:inline-flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  gap:4px;
-  padding:6px 10px;
-  border-radius:999px;
-  background:rgba(0,0,0,.18);
-  border:1px solid rgba(255,255,255,.12);
-  font-weight:700;
-  white-space:nowrap;
-  overflow:hidden;
-  text-overflow:ellipsis;
-  max-width:100%;
-}
-.sys-chip .sys-sub{
-  font-weight:500;
-  opacity:.85;
-  white-space:normal;
-}
-
-.sys-stack{
-  display:flex;
-  flex-direction:column;
-  gap:6px;
-  align-items:flex-start;
-}
-
-body {
-  grid-template-columns: 1fr 520px !important;
-}
-
-aside.card {
-  overflow-x: hidden !important;
-}
-
-.panel,
-.data-popup {
-  padding: 8px 10px !important;
-}
-
-.chip {
-  padding: 6px 8px !important;
-  font-size: 13px;
-  line-height: 1.2;
-}
-
-.data-row {
-  padding: 8px 10px !important;
-  gap: 8px !important;
-}
-
-.type-chip {
-  flex: 0 0 110px !important;
-  font-size: 12px;
-}
-
-/* System-Chip darf umbrechen */
-.sys-chip {
-  max-width: 100% !important;
-  white-space: normal !important;
-  word-break: break-word;
-  overflow-wrap: anywhere;
-  text-align: center;
-}
-
-/* Text im Popup darf umbrechen */
-.data-popup,
-.data-popup * {
-  word-break: break-word;
-  overflow-wrap: anywhere;
-}
-
-/* Tabellen nicht breiter als Sidebar */
-aside.card .data-table {
-  table-layout: fixed;
-  width: 100%;
-}
-
-aside.card .data-table th,
-aside.card .data-table td {
-  white-space: normal;
-  word-break: break-word;
-  overflow-wrap: anywhere;
-}
-
-/* Sicherheitsregel: nichts darf Sidebar sprengen */
-aside.card * {
-  max-width: 100%;
-  box-sizing: border-box;
-}
-
-/* =========================================
-   Einheitliche Schriftgröße für Sidebar-Chips/Buttons
-   ========================================= */
-.btn,
-.chip,
-.type-chip,
-.sys-chip {
-  font-size: 13px !important;
-  font-weight: 600 !important;
-  line-height: 1.2 !important;
-  flex-shrink: 0;
-}
-
-/* =========================================
-   Größere Schrift ohne Layout-Verschiebung
-   ========================================= */
-.btn,
-.chip,
-.type-chip,
-.sys-chip {
-  font-size: 14px !important;   /* etwas größer */
-  line-height: 1.2 !important; /* stabil */
-  padding-top: 6px !important;
-  padding-bottom: 6px !important;
-}
-
-/* =========================================
-   Kein Zeilenumbruch in Buttons/Chips
-   ========================================= */
-.btn,
-.chip {
-  white-space: nowrap !important;
-  overflow: hidden !important;
-  text-overflow: ellipsis !important;
-  padding: 4px 8px !important; /* kompakter, verhindert Höhenwachstum */
-}
-
-/* =========================================
-   Fix: Ellipsis funktioniert auch bei Type-Chips (kein Abschneiden ohne …)
-   ========================================= */
-.type-chip{
-  display: inline-block !important;     /* text-overflow braucht kein flex */
-  max-width: 110px !important;          /* entspricht der gewünschten "Spalte" */
-  white-space: nowrap !important;
-  overflow: hidden !important;
-  text-overflow: ellipsis !important;
-  vertical-align: middle;
-}
-
-/* =========================================
-   Spaltenabstand anpassen:
-   Pflegesystem-Spalte weiter nach rechts
-   ========================================= */
-
-/* Daten-Zeile mehr Platz zwischen links (Typ) und rechts (System) */
-.data-row{
-  justify-content: space-between !important;
-  gap: 16px !important;   /* größerer Abstand zwischen den Spalten */
-}
-
-/* Linke Spalte etwas schmaler */
-.type-chip{
-  flex: 0 0 100px !important;  /* etwas schmaler */
-  max-width: 100px !important;
-  white-space: nowrap !important;
-}
-
-/* Rechte Spalte klar nach rechts gedrückt */
-.data-sys{
-  margin-left: auto !important;
-  display: flex !important;
-  justify-content: flex-end !important;
-}
-
-/* =========================================
-   Korrektur: Buttons NICHT rechts zentrieren
-   Nur rechte Spalte weiter nach rechts schieben
-   ========================================= */
-
-/* Linke Spalte feste, etwas kleinere Breite */
-.type-chip{
-  flex: 0 0 105px !important;
-  max-width: 105px !important;
-}
-
-/* Rechter Bereich beginnt weiter rechts,
-   bleibt aber LINKS ausgerichtet */
-.data-sys{
-  margin-left: 24px !important;   /* verschiebt gesamte Spalte */
-  justify-content: flex-start !important;
-  align-items: flex-start !important;
-}
-
-/* Gleichmäßiger Abstand ohne Zentrierung */
-.data-row{
-  gap: 24px !important;
-  justify-content: flex-start !important;
-}
-
-/* =========================================
-   Tabellenansicht: Datenart-Spalte breiter,
-   Pflegesystem-Spalte startet weiter rechts
-   (ohne Rechts-Zentrierung)
-   ========================================= */
-
-/* Erste Spalte (Datenart-Button) bekommt mehr Platz */
-.type-chip{
-  flex: 0 0 170px !important;
-  max-width: 170px !important;
-
-  /* volle Beschriftung erlauben */
-  white-space: nowrap !important;
-  overflow: visible !important;
-  text-overflow: clip !important;
-  display: inline-flex !important;
-}
-
-/* Abstand zwischen den Spalten erhöhen (schiebt System-Spalte nach rechts) */
-.data-row{
-  justify-content: flex-start !important;
-  gap: 28px !important;
-}
-
-/* System-Spalte bleibt linksbündig innerhalb ihrer Spalte */
-.data-sys{
-  margin-left: 0 !important;
-  justify-content: flex-start !important;
-  align-items: flex-start !important;
-}
-
-
-
-/* === GitHub-Layoutfix: Datenpopup wie in der Standalone-Datei (kein schmaler System-Chip / keine vertikale Buchstaben-Stapelung) === */
-.data-row{
-  display:grid !important;
-  grid-template-columns: max-content minmax(0, 1fr) !important;
-  align-items:start !important;
-  justify-content: unset !important;
-  gap:12px !important;
-}
-
-.type-chip{
-  max-width: 220px !important;
-  white-space: nowrap !important;
-  overflow: hidden !important;
-  text-overflow: ellipsis !important;
-}
-
-.data-sys{ min-width: 0 !important; }
-
-/* Überschreibt die sehr aggressive 'anywhere'-Umbruchlogik nur für System-Chips */
-.sys-chip{
-  display:inline-flex !important;
-  flex-direction: column !important;
-  align-items: flex-start !important;
-  justify-content: flex-start !important;
-  text-align: left !important;
-
-  white-space: normal !important;
-  overflow: visible !important;
-  text-overflow: unset !important;
-
-  overflow-wrap: break-word !important;
-  word-break: normal !important;
-  width: 100% !important;
-  max-width: 100% !important;
-}
-
-/* Unterzeile darf sauber umbrechen */
-.sys-chip .sys-sub{
-  white-space: normal !important;
-}
-
-/* === Multi-System-Optimierung: mehrere Pflegesysteme sauber als Chips, ohne Abschneiden === */
-.sys-stack{
-  display:flex !important;
-  flex-direction:row !important;
-  flex-wrap:wrap !important;
-  gap:6px !important;
-  align-items:flex-start !important;
-}
-.sys-chip{
-  /* Chip bleibt eine Zeile; bei sehr langen Begriffen mit … statt Buchstabenstapelung */
-  white-space:nowrap !important;
-  overflow:hidden !important;
-  text-overflow:ellipsis !important;
-  max-width:100% !important;
-  overflow-wrap:normal !important;
-  word-break:normal !important;
-}
-/* Sub-Chip (falls genutzt) wie normaler Chip behandeln */
-.sys-sub-chip{
-  white-space:nowrap !important;
-  overflow:hidden !important;
-  text-overflow:ellipsis !important;
-}
-
-</style>
+  </style>
 </head>
 <body>
-<main class="card map-wrap">
-<div aria-live="polite" class="tooltip" id="tooltip" role="status"></div>
-<div id="mapWrap"></div></main>
-<aside class="card">
-<div style="padding:8px 14px 14px 14px; display:grid; grid-auto-rows:auto; align-content:start; gap:6px; min-height:0;">
-</div>
-<div class="panel">
-<div class="row" style="gap:10px; align-items:flex-start;">
-<div>
-<div id="selectedName" style="font-weight:800;">Keine Region gewählt</div>
-<div class="small" id="selectedMeta">Klicke auf eine Fläche in der Karte.</div>
-</div>
-<button class="btn" id="clearBtn" title="Auswahl zurücksetzen" type="button">↺</button>
-</div>
-<div class="row" style="margin-top:4px;">
-<button class="btn" disabled="" id="openBtn" type="button">Website öffnen</button>
-</div><div id="contactCard" style="margin-top:8px; display:none;">
-<div id="contactName" style="font-weight:600;">Ansprechpartner: –</div>
-<div class="small" id="contactEmail">E-Mail: –</div>
-</div>
-</div>
-<div aria-live="polite" class="data-popup" id="dataPopup">
-<h2 id="dataPopupTitle">Datenübersicht</h2>
-<div class="meta" id="dataPopupHint"></div>
-<div aria-label="Datenarten und Pflegesysteme" class="data-list" id="dataPopupList"></div>
-</div>
-</aside>
-<script></script>
-<script>function initApp(){
-// DATA_CATALOG is provided by CSV loader
-(function(){
+  <main class="card map-wrap">
+    <div id="tooltip" class="tooltip" role="status" aria-live="polite"></div>
+    <div id="mapWrap"></div>
+  </main>
+
+  <aside class="card">
+    <div class="panel" id="selectedCard">
+      <div class="row">
+        <div style="flex:1 1 auto; min-width:0;">
+          <div id="selectedName" style="font-weight:800;">Keine Region gewählt</div>
+          <div id="selectedMeta" class="small">Klicke auf eine Fläche in der Karte.</div>
+        </div>
+        <button id="clearBtn" class="btn" type="button" title="Auswahl zurücksetzen">↺</button>
+      </div>
+      <div class="row" style="margin-top:6px;">
+        <button id="openBtn" class="btn" type="button" disabled>Website öffnen</button>
+      </div>
+      <div id="contactCard" style="margin-top:8px; display:none;">
+        <div id="contactName" style="font-weight:600;">Ansprechpartner: –</div>
+        <div id="contactEmail" class="small">E-Mail: –</div>
+      </div>
+    </div>
+
+    <div id="dataPopup" class="data-popup" aria-live="polite">
+      <h2 id="dataPopupTitle">Datenübersicht</h2>
+      <div id="dataPopupHint" class="meta"></div>
+      <div id="dataPopupList" class="data-list" aria-label="Datenarten und Pflegesysteme"></div>
+    </div>
+  </aside>
+
+  <script>
+    async function loadText(url){
+      const res = await fetch(url);
+      if(!res.ok) throw new Error(`Fetch failed: ${url} (${res.status})`);
+      return await res.text();
+    }
+
+    function parseCSV(text){
+      const lines = text.split(/\r?\n/).filter(l => l.trim().length);
+      if(!lines.length) return [];
+      const header = parseCSVLine(lines.shift());
+
+      return lines.map(line => {
+        const cols = parseCSVLine(line);
+        const obj = {};
+        header.forEach((h,i) => obj[h] = (cols[i] ?? '').trim());
+        return obj;
+      });
+
+      function parseCSVLine(line){
+        const out = [];
+        let cur = '';
+        let inQuotes = false;
+        for(let i=0;i<line.length;i++){
+          const ch = line[i];
+          if(inQuotes){
+            if(ch === '"'){
+              if(i+1 < line.length && line[i+1] === '"'){
+                cur += '"';
+                i++;
+              }else{
+                inQuotes = false;
+              }
+            }else{
+              cur += ch;
+            }
+          }else{
+            if(ch === '"'){
+              inQuotes = true;
+            }else if(ch === ','){
+              out.push(cur);
+              cur = '';
+            }else{
+              cur += ch;
+            }
+          }
+        }
+        out.push(cur);
+        return out;
+      }
+    }
+
+    function escapeHtml(s){
+      return String(s).replace(/[&<>"']/g, c => ({
+        '&':'&amp;',
+        '<':'&lt;',
+        '>':'&gt;',
+        '"':'&quot;',
+        "'":'&#39;'
+      }[c]));
+    }
+
+    function sanitizeValue(v){
+      let s = String(v ?? '').trim();
+      s = s.replace(/^[\\"'“”]+/, '').replace(/[\\"'“”]+$/, '').trim();
+      return s;
+    }
+
+    function formatSystem(sys){
+      let raw = sanitizeValue(sys);
+      raw = raw
+        .replace(/\s+und\s+/gi, ', ')
+        .replace(/\s+bzw\.\s+/gi, ', ')
+        .replace(/\s*&\s*/g, ', ')
+        .replace(/\s*\|\s*/g, ', ')
+        .replace(/\s*;\s*/g, ', ')
+        .replace(/\s*\/\s*/g, ', ');
+
+      const parts = raw.split(',').map(s => sanitizeValue(s)).filter(Boolean);
+
+      if(parts.length <= 1){
+        const one = parts[0] || '';
+        return `<div class="sys-stack"><span class="sys-chip">${escapeHtml(one)}</span></div>`;
+      }
+
+      return `<div class="sys-stack">${parts.map(p => `<span class="sys-chip">${escapeHtml(p)}</span>`).join('')}</div>`;
+    }
+
+    function initApp(){
       const svg = document.getElementById('sachsenMap');
       const tooltip = document.getElementById('tooltip');
       const selectedName = document.getElementById('selectedName');
       const selectedMeta = document.getElementById('selectedMeta');
       const clearBtn = document.getElementById('clearBtn');
       const openBtn = document.getElementById('openBtn');
-const dataPopup = document.getElementById('dataPopup');
+      const dataPopup = document.getElementById('dataPopup');
       const dataPopupTitle = document.getElementById('dataPopupTitle');
       const dataPopupHint = document.getElementById('dataPopupHint');
       const dataPopupList = document.getElementById('dataPopupList');
-// Ansprechpartner (werden erst nach Regionsauswahl eingeblendet)
-const contactCard  = document.getElementById('contactCard');
-const contactName  = document.getElementById('contactName');
-const contactEmail = document.getElementById('contactEmail');
+      const contactCard = document.getElementById('contactCard');
+      const contactName = document.getElementById('contactName');
+      const contactEmail = document.getElementById('contactEmail');
 
-      // Datenkatalog: bitte nach Bedarf pro Region anpassen.
-      // Struktur: regionId: [{ type: 'Datenart', system: 'Systemname' }, ...]
+      const DATA_CATALOG = window.DATA_CATALOG || {};
+      const CONTACTS = {
+        saechsisch:              { name: '', email: '' },
+        erzgebirge:              { name: '', email: '' },
+        oberlausitz:             { name: '', email: '' },
+        leipzig:                 { name: '', email: '' },
+        leipzig_stadt:           { name: '', email: '' },
+        dresden:                 { name: '', email: '' },
+        dresden_stadt:           { name: '', email: '' },
+        chemnitz_zwickau_region: { name: '', email: '' },
+        chemnitz_stadt:          { name: '', email: '' },
+        vogtland:                { name: '', email: '' }
+      };
+
+      const regions = Array.from(svg.querySelectorAll('g.region[id]'));
+      let activeId = null;
+
       function renderDataPopup(regionId, regionName){
         const rows = DATA_CATALOG[regionId] || [];
         dataPopupTitle.textContent = `Datenübersicht: ${regionName}`;
         dataPopupHint.textContent = rows.length
           ? 'Übersicht der Datenarten und des Pflegesystems für diese Region.'
-          : 'Für diese Region sind noch keine Datenarten hinterlegt. (DATA_CATALOG ergänzen)';
-
+          : 'Für diese Region sind noch keine Datenarten hinterlegt.';
         dataPopupList.innerHTML = rows.map(r => `
           <div class="data-row">
             <div class="type-chip">${escapeHtml(r.type)}</div>
             <div class="data-sys">${formatSystem(r.system)}</div>
           </div>
         `).join('');
-dataPopup.classList.add('is-open');
+        dataPopup.classList.add('is-open');
       }
 
       function closeDataPopup(){
         dataPopup.classList.remove('is-open');
-      }
-      const regions = Array.from(svg.querySelectorAll('g.region[id]'));
-  function svgToLocalPoint(evt) {
-    const pt = svg.createSVGPoint();
-    pt.x = evt.clientX;
-    pt.y = evt.clientY;
-    const ctm = svg.getScreenCTM();
-    if (!ctm) return { x: 0, y: 0 };
-    const local = pt.matrixTransform(ctm.inverse());
-    return { x: local.x, y: local.y };
-  }
-
-  function pickRegion(evt) {
-    // Special case 1: Chemnitz (Stadt) must be selectable separately even though it sits inside Chemnitz Zwickau Region.
-    // Special case 2: Leipzig (Stadt) must be selectable separately even though it sits inside Leipzig Region.
-    const p = svgToLocalPoint(evt);
-
-    const chemnitzCityPath = document.querySelector('#chemnitz_stadt path.flaeche');
-    if (chemnitzCityPath && chemnitzCityPath.isPointInFill && chemnitzCityPath.isPointInFill(p)) {
-      return document.getElementById('chemnitz_stadt');
-    }
-
-    const leipzigCityPath = document.querySelector('#leipzig_stadt path.flaeche');
-    if (leipzigCityPath && leipzigCityPath.isPointInFill && leipzigCityPath.isPointInFill(p)) {
-      return document.getElementById('leipzig_stadt');
-    }
-
-    const hit = evt.target.closest('path.flaeche, path.hit');
-    return hit ? hit.closest('g.region') : null;
-  }
-
-// === Punkt 4: Auto-viewBox (gegen Abschneiden) ===
-  (function fitViewBox(){
-    // Wichtig: erst nachdem das SVG im DOM ist
-    const bbox = svg.getBBox();
-    const pad = 20; // Rand in SVG-Einheiten
-    svg.setAttribute(
-      'viewBox',
-      `${bbox.x - pad} ${bbox.y - pad} ${bbox.width + pad*2} ${bbox.height + pad*2}`
-    );
-    svg.setAttribute('preserveAspectRatio', 'xMidYMid meet');
-  })();
-
-      function escapeHtml(s){
-        return String(s).replace(/[&<>"']/g, c => ({
-          '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
-        }[c]));
-      }
-
-      
-  function sanitizeValue(v){
-    // remove surrounding straight/curly quotes and trim
-    let s = String(v ?? '').trim();
-    s = s.replace(/^[\"'“”]+/, '').replace(/[\"'“”]+$/, '').trim();
-    return s;
-  }
-
-function formatSystem(sys){
-  // Mehrere Systeme pro Zeile erlauben.
-  // Unterstützte Trenner: ,  /  ;  |  " und "  "bzw."  "&"
-  // Beispiele:
-  // - "Outdooractive/ThüCAT"
-  // - "Elodis/Kulturserver/SaTourN"
-  // - "SaTourN, tw. Feratel Deskline® und Destination Solution"
-  let raw = sanitizeValue(sys);
-
-  // Typische Texttrenner normalisieren
-  raw = raw
-    .replace(/\s+und\s+/gi, ', ')
-    .replace(/\s+bzw\.\s+/gi, ', ')
-    .replace(/\s*&\s*/g, ', ')
-    .replace(/\s*\|\s*/g, ', ')
-    .replace(/\s*;\s*/g, ', ')
-    .replace(/\s*\/\s*/g, ', ');
-
-  const parts = raw.split(',').map(s => sanitizeValue(s)).filter(Boolean);
-
-  if(parts.length <= 1){
-    const one = parts[0] || '';
-    return `
-      <div class="sys-stack">
-        <span class="sys-chip">${escapeHtml(one)}</span>
-      </div>
-    `;
-  }
-
-  return `
-    <div class="sys-stack">
-      ${parts.map(p => `<span class="sys-chip">${escapeHtml(p)}</span>`).join('')}
-    </div>
-  `;
-}
-
-function buildList(){
-        list.innerHTML = '';
-        regions
-          .map(g => ({ id:g.id, name:g.dataset.name || g.id, url:g.dataset.url || '' }))
-          .sort((a,b) => a.name.localeCompare(b.name, 'de'))
-          .forEach(r => {
-            const el = document.createElement('div');
-            el.className = 'chip';
-            el.tabIndex = 0;
-            el.dataset.regionId = r.id;
-            el.innerHTML = `
-              <div>
-                <div style="font-weight:700;">${escapeHtml(r.name)}</div>
-                
-              </div>
-              <div class="id">↗</div>
-            `;
-            el.addEventListener('click', () => selectById(r.id, true));
-            el.addEventListener('keydown', (e) => {
-              if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); selectById(r.id, true); }
-            });
-            list.appendChild(el);
-          });
       }
 
       function showTooltip(text, sub){
         tooltip.innerHTML = `<strong>${escapeHtml(text)}</strong>${sub ? `<span class="muted">${escapeHtml(sub)}</span>` : ''}`;
         tooltip.style.transform = 'translate(0,0)';
       }
+
       function moveTooltip(clientX, clientY){
         const pad = 10;
         const rect = tooltip.getBoundingClientRect();
         const vw = window.innerWidth;
         const vh = window.innerHeight;
-        let x = clientX + pad, y = clientY + pad;
+        let x = clientX + pad;
+        let y = clientY + pad;
         if (x + rect.width + pad > vw) x = clientX - rect.width - pad;
         if (y + rect.height + pad > vh) y = clientY - rect.height - pad;
         tooltip.style.left = x + 'px';
-        tooltip.style.top  = y + 'px';
+        tooltip.style.top = y + 'px';
       }
-      function hideTooltip(){ tooltip.style.transform = 'translate(-9999px, -9999px)'; }
 
-      let activeId = null;
+      function hideTooltip(){
+        tooltip.style.transform = 'translate(-9999px, -9999px)';
+      }
+
+      function svgToLocalPoint(evt){
+        const pt = svg.createSVGPoint();
+        pt.x = evt.clientX;
+        pt.y = evt.clientY;
+        const ctm = svg.getScreenCTM();
+        if (!ctm) return { x: 0, y: 0 };
+        const local = pt.matrixTransform(ctm.inverse());
+        return { x: local.x, y: local.y };
+      }
+
+      function pickRegion(evt){
+        const p = svgToLocalPoint(evt);
+        const chemnitzCityPath = document.querySelector('#chemnitz_stadt path.flaeche');
+        if (chemnitzCityPath && chemnitzCityPath.isPointInFill && chemnitzCityPath.isPointInFill(p)) {
+          return document.getElementById('chemnitz_stadt');
+        }
+        const leipzigCityPath = document.querySelector('#leipzig_stadt path.flaeche');
+        if (leipzigCityPath && leipzigCityPath.isPointInFill && leipzigCityPath.isPointInFill(p)) {
+          return document.getElementById('leipzig_stadt');
+        }
+        const hit = evt.target.closest('path.flaeche, path.hit');
+        return hit ? hit.closest('g.region') : null;
+      }
 
       function clearSelection(){
         activeId = null;
@@ -826,68 +467,48 @@ function buildList(){
         selectedMeta.textContent = 'Klicke auf eine Fläche in der Karte.';
         openBtn.disabled = true;
         openBtn.onclick = null;
-        
-  // Ansprechpartner zurücksetzen/ausblenden
-  if (contactCard)  contactCard.style.display = 'none';
-  if (contactName)  contactName.textContent  = 'Ansprechpartner: –';
-  if (contactEmail) contactEmail.textContent = 'E-Mail: –';
-
-  closeDataPopup();
+        contactCard.style.display = 'none';
+        contactName.textContent = 'Ansprechpartner: –';
+        contactEmail.textContent = 'E-Mail: –';
+        closeDataPopup();
       }
 
-// Ansprechpartner je Region (bitte Namen/E-Mails hier pflegen)
-const CONTACTS = {
-  saechsisch:              { name: '', email: '' },
-  erzgebirge:              { name: '', email: '' },
-  oberlausitz:             { name: '', email: '' },
-  leipzig:                 { name: '', email: '' },
-  leipzig_stadt:           { name: '', email: '' },
-  dresden:                 { name: '', email: '' },
-  dresden_stadt:           { name: '', email: '' },
-  chemnitz_zwickau_region: { name: '', email: '' },
-  chemnitz_stadt:          { name: '', email: '' },
-  vogtland:                { name: '', email: '' }
-};
+      function selectById(id){
+        if (activeId === id) {
+          clearSelection();
+          return;
+        }
+        const g = regions.find(x => x.id === id);
+        if (!g) return;
 
-function selectById(id){
+        activeId = id;
+        svg.classList.add('has-selection');
+        regions.forEach(x => x.classList.toggle('is-active', x.id === id));
 
-  // === NEU: Toggle-Auswahl ===
-  // Wenn die Region schon aktiv ist → deaktivieren
-  if (activeId === id) {
-    clearSelection();
-    return;
-  }
+        const name = g.dataset.name || g.id;
+        const url = g.dataset.url || '';
+        selectedName.textContent = name;
+        selectedMeta.textContent = '';
 
-  // Normale Auswahl
-  const g = regions.find(x => x.id === id);
-  if (!g) return;
+        const c = CONTACTS[id] || {};
+        contactName.textContent = `Ansprechpartner: ${c.name || '–'}`;
+        contactEmail.textContent = `E-Mail: ${c.email || '–'}`;
+        contactCard.style.display = 'block';
 
-  activeId = id;
-  svg.classList.add('has-selection');
+        renderDataPopup(g.id, name);
 
-  // Nur diese Region aktiv setzen
-  regions.forEach(x => x.classList.toggle('is-active', x.id === id));
+        openBtn.disabled = !url;
+        openBtn.onclick = () => {
+          if (url) window.open(url, '_blank', 'noopener,noreferrer');
+        };
+      }
 
-  const name = g.dataset.name || g.id;
-  const url = g.dataset.url || '';
-
-  selectedName.textContent = name;
-  selectedMeta.textContent = '';
-
-  // Ansprechpartner setzen
-  const c = CONTACTS[id] || {};
-  if (contactName)  contactName.textContent  = `Ansprechpartner: ${c.name  || '–'}`;
-  if (contactEmail) contactEmail.textContent = `E-Mail: ${c.email || '–'}`;
-  if (contactCard)  contactCard.style.display = 'block';
-
-  // Popup mit Datenarten/Systemen öffnen
-  renderDataPopup(g.id, name);
-
-  openBtn.disabled = !url;
-  openBtn.onclick = () => {
-    if (url) window.open(url, '_blank', 'noopener,noreferrer');
-  };
-}
+      (function fitViewBox(){
+        const bbox = svg.getBBox();
+        const pad = 20;
+        svg.setAttribute('viewBox', `${bbox.x - pad} ${bbox.y - pad} ${bbox.width + pad*2} ${bbox.height + pad*2}`);
+        svg.setAttribute('preserveAspectRatio', 'xMidYMid meet');
+      })();
 
       svg.addEventListener('pointermove', (e) => {
         const p = e.target.closest('path.flaeche, path.hit');
@@ -920,87 +541,34 @@ function selectById(id){
         selectById(g.id);
       });
 
-      window.addEventListener('keydown', (e) => { if (e.key === 'Escape') clearSelection(); });
+      window.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') clearSelection();
+      });
+
       clearBtn.addEventListener('click', clearSelection);
-clearSelection();
-
-      // Optional: URLs setzen
-      // svg.querySelector('#erzgebirge').dataset.url = 'https://www.erzgebirge-tourismus.de/';
-      // svg.querySelector('#saechsisch').dataset.url = 'https://www.saechsische-schweiz.de/';
-    })();
-}
-</script><script>
-async function loadText(url){
-  const res = await fetch(url);
-  if(!res.ok) throw new Error(`Fetch failed: ${url} (${res.status})`);
-  return await res.text();
-}
-function parseCSV(text){
-  // CSV-Parser mit Unterstützung für Anführungszeichen (RFC4180-ähnlich, ausreichend für unsere Datei)
-  // Unterstützt: Kommas in "..." sowie "" als Escaping.
-  const lines = text.split(/\r?\n/).filter(l => l.trim().length);
-  if(!lines.length) return [];
-  const header = parseCSVLine(lines.shift());
-
-  return lines.map(line => {
-    const cols = parseCSVLine(line);
-    const obj = {};
-    header.forEach((h,i) => obj[h] = (cols[i] ?? '').trim());
-    return obj;
-  });
-
-  function parseCSVLine(line){
-    const out = [];
-    let cur = '';
-    let inQuotes = false;
-    for(let i=0;i<line.length;i++){
-      const ch = line[i];
-      if(inQuotes){
-        if(ch === '"'){
-          // Escaped quote
-          if(i+1 < line.length && line[i+1] === '"'){
-            cur += '"'; i++;
-          }else{
-            inQuotes = false;
-          }
-        }else{
-          cur += ch;
-        }
-      }else{
-        if(ch === '"'){
-          inQuotes = true;
-        }else if(ch === ','){
-          out.push(cur); cur = '';
-        }else{
-          cur += ch;
-        }
-      }
+      clearSelection();
     }
-    out.push(cur);
-    return out;
-  }
-}
-async function boot(){
-  // inline SVG
-  const svgText = await loadText('sachsenkarte.svg');
-  document.getElementById('mapWrap').innerHTML = svgText;
 
-  // load CSV -> DATA_CATALOG
-  const csvText = await loadText('datenpopup.csv');
-  const rows = parseCSV(csvText);
-  const byRegion = {};
-  for(const r of rows){
-    const id = r.region_id;
-    if(!byRegion[id]) byRegion[id] = [];
-    byRegion[id].push({ type: r.datenart, system: r.system });
-  }
-  window.DATA_CATALOG = byRegion;
+    async function boot(){
+      const svgText = await loadText('sachsenkarte.svg');
+      document.getElementById('mapWrap').innerHTML = svgText;
 
-  // run app
-  initApp();
-}
-document.addEventListener('DOMContentLoaded', () => {
-  boot().catch(err => console.error(err));
-});
-</script></body>
+      const csvText = await loadText('datenpopup.csv');
+      const rows = parseCSV(csvText);
+      const byRegion = {};
+      for(const r of rows){
+        const id = r.region_id;
+        if(!byRegion[id]) byRegion[id] = [];
+        byRegion[id].push({ type: r.datenart, system: r.system });
+      }
+      window.DATA_CATALOG = byRegion;
+
+      initApp();
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      boot().catch(err => console.error(err));
+    });
+  </script>
+</body>
 </html>
