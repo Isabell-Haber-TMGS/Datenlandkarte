@@ -258,7 +258,9 @@
         <button id="clearBtn" class="btn" type="button" title="Auswahl zurücksetzen">↺</button>
       </div>
       <div class="row" style="margin-top:6px;">
-        <button id="openBtn" class="btn" type="button" disabled>Website öffnen</button>
+        <button id="openBtn" class="btn" style="display:none">
+Website öffnen
+</button>
       </div>
       <div id="contactCard" style="margin-top:8px; display:none;">
         <div id="contactName" style="font-weight:600;">Ansprechpartner: –</div>
@@ -489,6 +491,13 @@
         selectedName.textContent = name;
         selectedMeta.textContent = '';
 
+openBtn.style.display = url ? "inline-flex" : "none";
+openBtn.disabled = !url;
+
+openBtn.onclick = () => {
+  if (url) window.open(url, '_blank', 'noopener,noreferrer');
+};
+        
         const c = CONTACTS[id] || {};
         contactName.textContent = `Ansprechpartner: ${c.name || '–'}`;
         contactEmail.textContent = `E-Mail: ${c.email || '–'}`;
