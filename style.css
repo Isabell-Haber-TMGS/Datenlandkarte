@@ -25,7 +25,7 @@ body{
   display:grid;
 
   /* rechte Spalte breiter */
-  grid-template-columns:1fr minmax(560px,700px);
+  grid-template-columns:1fr minmax(640px,820px);
 
   gap:16px;
 }
