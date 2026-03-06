@@ -30,6 +30,8 @@ body{
 
 *{box-sizing:border-box}
 
+/* Kartencontainer */
+
 .card{
   background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
   border:1px solid rgba(255,255,255,.08);
@@ -96,7 +98,9 @@ body{
   pointer-events:fill;
 }
 
-.region image,.region .logo,.region .label{pointer-events:none}
+.region image,.region .logo,.region .label{
+  pointer-events:none
+}
 
 .region .flaeche{
   fill:rgba(110,160,255,.18);
@@ -133,7 +137,9 @@ body{
   filter:drop-shadow(0 8px 18px rgba(0,0,0,.28));
 }
 
-.region.is-hover .innerline{stroke:var(--stroke-hover)}
+.region.is-hover .innerline{
+  stroke:var(--stroke-hover)
+}
 
 .region.is-active .flaeche{
   fill:rgba(255,210,80,.32);
@@ -236,7 +242,7 @@ aside.card{
   display:grid;
   grid-template-columns:180px 1fr;
   gap:16px;
-  align-items:start;
+  align-items:center;
 
   padding:14px 0;
   border-bottom:1px solid rgba(255,255,255,.08);
@@ -247,7 +253,8 @@ aside.card{
 .data-type{
   font-weight:700;
   color:var(--text);
-  padding-top:6px;
+  display:flex;
+  align-items:center;
 }
 
 /* Systeme */
@@ -257,6 +264,7 @@ aside.card{
   flex-direction:column;
   gap:8px;
   align-items:flex-start;
+  justify-content:center;
 }
 
 /* Pflegesystem-Chips */
