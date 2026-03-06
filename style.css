@@ -247,25 +247,21 @@ aside.card{
   display:flex;
   flex-direction:column;
   gap:6px;
-  align-items:stretch;   /* wichtig */
-  width:100%;            /* wichtig */
+  align-items:stretch;
+  width:100%;
 }
 
 .sys-chip{
   display:block;
-  width:100%;            /* alle Chips gleich breit */
+  width:100%;
   padding:6px 10px;
   border-radius:999px;
   background:var(--chip-bg);
   border:1px solid var(--chip-border);
   font-weight:700;
   white-space:normal;
-  text-align:center;
-}
-
-  /* kein Abschneiden mehr */
-  white-space:normal;
   overflow:visible;
+  text-align:center;
 }
 
 @media (max-width:980px){
