@@ -220,10 +220,15 @@ async function loadText(url){
 
         renderDataPopup(g.id, name);
 
-        openBtn.disabled = !url;
-        openBtn.onclick = () => {
-          if (url) window.open(url, '_blank', 'noopener,noreferrer');
-        };
+        if(url){
+  openBtn.style.display = "inline-flex";
+  openBtn.disabled = false;
+  openBtn.onclick = () => {
+    window.open(url, '_blank', 'noopener,noreferrer');
+  };
+}else{
+  openBtn.style.display = "none";
+}
       }
 
       (function fitViewBox(){
