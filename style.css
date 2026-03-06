@@ -1,152 +1,340 @@
-
 :root{
-  --bg:#0b0f1a;
-  --text:#e8eefc;
-  --muted:#a9b6d6;
-  --stroke:rgba(255,255,255,.28);
-  --stroke-hover:rgba(255,255,255,.55);
-  --shadow:0 10px 30px rgba(0,0,0,.35);
-  --panel-bg:rgba(0,0,0,.18);
-  --chip-bg:rgba(0,0,0,.18);
-  --chip-border:rgba(255,255,255,.12);
-}
-
-html,body{height:100%}
-html{scrollbar-gutter:stable}
+      --bg:#0b0f1a; --text:#e8eefc; --muted:#a9b6d6;
+      --stroke:rgba(255,255,255,.28); --stroke-hover:rgba(255,255,255,.55);
+      --shadow:0 10px 30px rgba(0,0,0,.35);
+    }
+    html,body{height:100%}
+    
+    /* Prevent layout shift when content toggles causes page scrollbar to appear/disappear */
+    html { scrollbar-gutter: stable; }
+    /* Fallback for browsers without scrollbar-gutter support */
+    body { overflow-y: scroll; }
 
 body{
-  margin:0;
-  padding:16px;
-  box-sizing:border-box;
-  overflow-y:scroll;
-  font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
-  background:radial-gradient(1200px 700px at 20% 10%, #172244, var(--bg));
-  color:var(--text);
-  display:grid;
+      margin:0; padding:16px; box-sizing:border-box;
+      font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+      background:radial-gradient(1200px 700px at 20% 10%, #172244, var(--bg));
+      color:var(--text);
+      display:grid; grid-template-columns: 1fr 580px; gap:16px;
+    }
+    .card{
+      background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+      border:1px solid rgba(255,255,255,.08);
+      border-radius:16px; box-shadow:var(--shadow);
+      overflow:hidden; min-height:0;
+    }
+    .map-wrap{
+      position:relative;
+      display:grid;
+      grid-template-rows: minmax(0, 1fr) auto;
+      gap:10px;
+      align-items:stretch;
+      justify-items:stretch;
+      padding:10px;
+      height:calc(100vh - 32px);
+    }
+    svg{ width:min(750px,100%); height:auto; display:block; user-select:none; }
+    .map-wrap svg{ justify-self:center; }
+    /* Daten-Übersicht unten rechts im Karten-Frame */
+    .region .flaeche,.region .hit{ cursor:pointer; vector-effect:non-scaling-stroke; pointer-events:fill; }
+    .region image, .region .logo, .region .label { pointer-events:none; }
+    .region .flaeche{
+      fill:rgba(110,160,255,.18);
+      stroke:var(--stroke); stroke-width:1.5;
+      transition:fill .18s ease, stroke .18s ease, filter .18s ease, opacity .18s ease;
+    }
+    .region .hit{ fill:transparent; stroke:transparent; stroke-width:18; }
+    .region.is-hover .flaeche{
+      fill:rgba(110,160,255,.30); stroke:var(--stroke-hover);
+      filter:drop-shadow(0 8px 18px rgba(0,0,0,.28));
+    }
+    .region.is-active .flaeche{ fill:rgba(255,210,80,.32); stroke:rgba(255,210,80,.75); }
+    svg.has-selection .region:not(.is-active) .flaeche{ opacity:.40; }
+    .tooltip{
+      position:absolute; transform:translate(-9999px,-9999px);
+      padding:10px 12px; border-radius:12px;
+      background:rgba(10,14,26,.92);
+      border:1px solid rgba(255,255,255,.14);
+      color:var(--text); font-size:13px; line-height:1.25;
+      box-shadow:var(--shadow); pointer-events:none; white-space:nowrap; max-width:260px;
+    }
+    .tooltip .muted{ color:var(--muted); font-size:12px; display:block; margin-top:2px; }
 
-  /* rechte Spalte etwas breiter */
-  grid-template-columns:1fr minmax(560px,700px);
-  gap:16px;
+    aside{ display:flex; flex-direction:column; gap:12px; padding:14px; }
+    h1{ font-size:16px; margin:0; letter-spacing:.2px; }
+    .small{ color:var(--muted); font-size:12px; margin-top:4px; }
+    .panel{
+      background:rgba(0,0,0,.18);
+      border:1px solid rgba(255,255,255,.08);
+      border-radius:12px; padding:12px;
+    }
+    .row{ display:flex; gap:8px; align-items:center; justify-content:flex-start; }
+    .btn{
+      appearance:none; border:1px solid rgba(255,255,255,.14);
+      background:rgba(255,255,255,.06); color:var(--text);
+      border-radius:12px; padding:10px 12px; cursor:pointer; font-weight:600;
+      transition:transform .05s ease, background .15s ease;
+    }
+    .btn:active{ transform:translateY(1px); }
+    .btn:hover{ background:rgba(255,255,255,.10); }
+    .list{ display:grid; gap:8px; flex:1 1 auto; overflow:visible !important; }
+    .chip{
+      display:flex; justify-content:space-between; align-items:center; gap:8px;
+      padding:10px 10px; border-radius:12px;
+      border:1px solid rgba(255,255,255,.10);
+      background:rgba(0,0,0,.18); cursor:pointer; user-select:none;
+    }
+    .chip:hover{ background:rgba(0,0,0,.25); }
+    .chip .id{ color:var(--muted); font-size:12px; display:none }
+    .footer{ color:var(--muted); font-size:12px; padding-top:6px; }
+
+    @media (max-width:980px){
+      body{ grid-template-columns:1fr; }
+      svg{ }
+    }
+  
+  /* Linien/Umrisse ohne Flächenfüllung */
+  .region .grenze { fill: none; stroke: #ffffff; stroke-width: 1.5; stroke-linejoin: round; }
+
+/* Leipzig (Stadt) – interne Abgrenzung innerhalb Leipzig Region */
+.region .innerline{
+  fill: none;
+  stroke: var(--stroke);
+  stroke-width: 1.2;
+  vector-effect: non-scaling-stroke;
+  pointer-events: none;
+  opacity: .9;
 }
+.region.is-hover .innerline{ stroke: var(--stroke-hover); }
+.region.is-active .innerline{ stroke: rgba(255, 210, 80, .75); }
 
-*{box-sizing:border-box}
+      /* allow Leipzig Stadt to be clickable separately */
+      #leipzig .hit { pointer-events: none; }
+      /* allow Chemnitz Stadt to be clickable separately */
+      #chemnitz_zwickau_region .hit { pointer-events: none; }
 
-.card{
-  background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
-  border:1px solid rgba(255,255,255,.08);
-  border-radius:16px;
-  box-shadow:var(--shadow);
-  min-height:0;
-  overflow:hidden;
-}
-
-.map-wrap{
-  position:relative;
-  display:grid;
-  grid-template-rows:minmax(0,1fr) auto;
-  gap:10px;
-  padding:10px;
-  height:calc(100vh - 32px);
-}
-
-#mapWrap{
-  display:grid;
-  justify-items:center;
-  align-items:start;
-  min-height:0;
-}
-
-#mapWrap svg{
-  width:min(750px,100%);
-  height:auto;
-  display:block;
-  user-select:none;
-}
-
-aside.card{
-  display:flex;
-  flex-direction:column;
-  gap:12px;
-  padding:14px;
-  overflow:auto;
-  max-height:calc(100vh - 32px);
-}
-
-.panel{
-  background:var(--panel-bg);
-  border:1px solid rgba(255,255,255,.08);
-  border-radius:12px;
-  padding:12px;
-}
-
-.row{
-  display:flex;
-  gap:10px;
-  align-items:flex-start;
-}
-
-.small{
-  color:var(--muted);
-  font-size:12px;
-  margin-top:4px;
-}
-
-.btn{
-  appearance:none;
-  border:1px solid rgba(255,255,255,.14);
-  background:rgba(255,255,255,.06);
-  color:var(--text);
-  border-radius:12px;
-  padding:10px 12px;
-  cursor:pointer;
-  font-weight:600;
-}
-
+/* Rechts: Daten-Popup */
 .data-popup{
   display:none;
   background:rgba(0,0,0,.22);
   border:1px solid rgba(255,255,255,.10);
   border-radius:14px;
   padding:12px;
+}
+.data-popup.is-open{ display:block; }
+.data-popup h2{ font-size:14px; margin:0 0 8px 0; }
+.data-popup .meta{ color:var(--muted); font-size:12px; margin-top:2px; }
+.data-popup .close{
+  float:right;
+  margin-top:-2px;
+  border-radius:10px;
+  padding:6px 8px;
+  font-weight:700;
+}
+.data-table{
   width:100%;
+  border-collapse:separate;
+  border-spacing:0 8px;
+}
+.data-table th{
+  text-align:left;
+  font-size:12px;
+  color:var(--muted);
+  font-weight:700;
+  padding:0 6px 4px 6px;
+}
+.data-table td{
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:12px;
+  padding:10px 10px;
+  vertical-align:top;
+}
+.data-table .sys{
+  white-space:nowrap;
+  font-weight:700;
 }
 
-.data-popup.is-open{display:block}
+.data-table .sys .sys-sub{
+  display:block;
+  font-weight:500;
+  opacity:.85;
+  margin-top:4px;
+  white-space:normal;
+}
 
+/* Fix: prevent footer/text overlay by making the regions list panel a flex column with a scrollable list */
+.panel.list-panel{
+  display:flex;
+  flex-direction:column;
+  min-height:0;
+}
+.panel.list-panel .list{
+  flex:1 1 auto;
+  min-height:0;
+  overflow-x:hidden;
+}
+
+/* Allow regions list to use full available height without forced scrollbar */
+.panel.list-panel{
+  flex:1 1 auto;
+}
+.panel.list-panel .list{
+  overflow-y:visible;
+}
+
+/* Final fix: ensure regions list fills full height and no internal scrollbar */
+.panel.list-panel{
+  flex:1 1 auto;
+  display:flex;
+  flex-direction:column;
+}
+.panel.list-panel .list{
+  flex:1 1 auto;
+  overflow:visible !important;
+}
+
+/* Variante A: Popup oberhalb der Liste; Liste darf ohne interne Scrollbar wachsen */
+.panel.list-panel .list{
+  overflow:visible !important;
+}
+
+/* popup overlay safety */
+.map-wrap{ position:relative; }
+
+/* === Panel nach oben ziehen (Header entfernt) === */
+aside{
+  padding-top: 6px !important;
+  gap: 8px !important;
+}
+
+.panel{
+  margin-top: 0 !important;
+}
+
+#selectedCard{
+  margin-top: 0 !important;
+}
+
+.panel.list-panel{
+  padding-top: 6px !important;
+}
+
+/* === Panel/Listenbereich weiter nach oben (v2) === */
+.card > div[style*="display:grid"]{ align-content:start !important; }
+.panel{ margin-top:0 !important; }
+.panel.list-panel{ margin-top:0 !important; }
+
+/* === Daten-Popup in rechter Spalte unter Chip === */
+aside.card .data-popup{
+  position: static !important;
+  right:auto !important;
+  bottom:auto !important;
+  width:100% !important;
+  max-width:none !important;
+  margin-top: 12px;
+}
+.data-popup{ display:none !important; }
+.data-popup.is-open{ display:block !important; }
+
+/* === Sidebar/Pupup Lesbarkeit & kein Abschneiden === */
+aside.card{ overflow:auto; max-height: calc(100vh - 16px); }
+aside.card .data-popup{ overflow:visible; }
+aside.card .table-wrap{ overflow:auto; }
+aside.card .data-table{ width:100%; table-layout:fixed; }
+aside.card .data-table th, aside.card .data-table td{ word-break:break-word; white-space:normal; }
+
+/* === Popup ausschließlich rechts in der Sidebar darstellen === */
+.map-wrap .data-popup{ display:none !important; }
+
+aside.card .data-popup{
+  display:none;
+  position:static !important;
+  width:100% !important;
+  max-width:none !important;
+  margin-top:12px;
+}
+
+aside.card .data-popup.is-open{
+  display:block !important;
+}
+/* === Daten-Tabelle: linke Spalte schmaler === */
+.data-table{
+  width:100%;
+  table-layout:fixed;
+}
+
+.data-table colgroup col:first-child{
+  width:35%;
+}
+
+.data-table colgroup col:last-child{
+  width:65%;
+}
+
+/* === Datenarten: Flex-Layout statt Tabellen-Spalten (verhindert Vollbreiten-"Chips") === */
 .data-list{
   display:flex;
   flex-direction:column;
   gap:10px;
 }
 
-/* wichtigste Änderung: Spalte passt sich automatisch dem längsten Datenart-Text an */
+/* Jede Zeile wirkt wieder „geordnet“ */
 .data-row{
-  display:grid;
-  grid-template-columns:max-content 1fr;
-  gap:16px;
-  align-items:start;
-  padding:10px 12px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  padding:10px 14px;
   border-radius:14px;
   background:rgba(255,255,255,.04);
   border:1px solid rgba(255,255,255,.08);
 }
-
-/* Chips alle gleich breit (breite = längster Text) */
+/* Datenart als Chip mit fixer „Spaltenbreite“ */
 .type-chip{
+  flex:0 0 150px;          /* Breite der Chip-Spalte */
   display:inline-flex;
   align-items:center;
-  justify-content:center;
-  min-width:160px;
+  justify-content:flex-start;
   padding:6px 10px;
   border-radius:999px;
-  background:var(--chip-bg);
-  border:1px solid var(--chip-border);
+  background:rgba(0,0,0,.18);
+  border:1px solid rgba(255,255,255,.12);
   font-weight:700;
   white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
 }
 
-/* Systeme */
-.data-sys{min-width:0}
+/* System-Spalte */
+.data-sys{
+  flex:1 1 auto;
+  min-width:0;
+  display:flex;
+  justify-content:flex-start; /* links ausrichten */
+}
+/* Pflegesystem ebenfalls als Chip */
+.sys-chip{
+  display:inline-flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:4px;
+  padding:6px 10px;
+  border-radius:999px;
+  background:rgba(0,0,0,.18);
+  border:1px solid rgba(255,255,255,.12);
+  font-weight:700;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  max-width:100%;
+}
+.sys-chip .sys-sub{
+  font-weight:500;
+  opacity:.85;
+  white-space:normal;
+}
 
 .sys-stack{
   display:flex;
@@ -155,17 +343,206 @@ aside.card{
   align-items:flex-start;
 }
 
-.sys-chip{
-  display:inline-flex;
-  align-items:center;
-  padding:6px 10px;
-  border-radius:999px;
-  background:var(--chip-bg);
-  border:1px solid var(--chip-border);
-  font-weight:700;
-  white-space:normal;
+body {
+  grid-template-columns: 1fr 520px !important;
 }
 
-@media (max-width:980px){
-  body{grid-template-columns:1fr}
+aside.card {
+  overflow-x: hidden !important;
+}
+
+.panel,
+.data-popup {
+  padding: 8px 10px !important;
+}
+
+.chip {
+  padding: 6px 8px !important;
+  font-size: 13px;
+  line-height: 1.2;
+}
+
+.data-row {
+  padding: 8px 10px !important;
+  gap: 8px !important;
+}
+
+.type-chip {
+  flex: 0 0 110px !important;
+  font-size: 12px;
+}
+
+/* System-Chip darf umbrechen */
+.sys-chip {
+  max-width: 100% !important;
+  white-space: normal !important;
+  word-break: break-word;
+  overflow-wrap: anywhere;
+  text-align: center;
+}
+
+/* Text im Popup darf umbrechen */
+.data-popup,
+.data-popup * {
+  word-break: break-word;
+  overflow-wrap: anywhere;
+}
+
+/* Tabellen nicht breiter als Sidebar */
+aside.card .data-table {
+  table-layout: fixed;
+  width: 100%;
+}
+
+aside.card .data-table th,
+aside.card .data-table td {
+  white-space: normal;
+  word-break: break-word;
+  overflow-wrap: anywhere;
+}
+
+/* Sicherheitsregel: nichts darf Sidebar sprengen */
+aside.card * {
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+/* =========================================
+   Einheitliche Schriftgröße für Sidebar-Chips/Buttons
+   ========================================= */
+.btn,
+.chip,
+.type-chip,
+.sys-chip {
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  line-height: 1.2 !important;
+  flex-shrink: 0;
+}
+
+/* =========================================
+   Größere Schrift ohne Layout-Verschiebung
+   ========================================= */
+.btn,
+.chip,
+.type-chip,
+.sys-chip {
+  font-size: 14px !important;   /* etwas größer */
+  line-height: 1.2 !important; /* stabil */
+  padding-top: 6px !important;
+  padding-bottom: 6px !important;
+}
+
+/* =========================================
+   Kein Zeilenumbruch in Buttons/Chips
+   ========================================= */
+.btn,
+.chip {
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  padding: 4px 8px !important; /* kompakter, verhindert Höhenwachstum */
+}
+
+/* =========================================
+   Fix: Ellipsis funktioniert auch bei Type-Chips (kein Abschneiden ohne …)
+   ========================================= */
+.type-chip{
+  display: inline-block !important;     /* text-overflow braucht kein flex */
+  max-width: 110px !important;          /* entspricht der gewünschten "Spalte" */
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  vertical-align: middle;
+}
+
+/* =========================================
+   Spaltenabstand anpassen:
+   Pflegesystem-Spalte weiter nach rechts
+   ========================================= */
+
+/* Daten-Zeile mehr Platz zwischen links (Typ) und rechts (System) */
+.data-row{
+  justify-content: space-between !important;
+  gap: 16px !important;   /* größerer Abstand zwischen den Spalten */
+}
+
+/* Linke Spalte etwas schmaler */
+.type-chip{
+  flex: 0 0 100px !important;  /* etwas schmaler */
+  max-width: 100px !important;
+  white-space: nowrap !important;
+}
+
+/* Rechte Spalte klar nach rechts gedrückt */
+.data-sys{
+  margin-left: auto !important;
+  display: flex !important;
+  justify-content: flex-end !important;
+}
+
+/* =========================================
+   Korrektur: Buttons NICHT rechts zentrieren
+   Nur rechte Spalte weiter nach rechts schieben
+   ========================================= */
+
+/* Linke Spalte feste, etwas kleinere Breite */
+.type-chip{
+  flex: 0 0 105px !important;
+  max-width: 105px !important;
+}
+
+/* Rechter Bereich beginnt weiter rechts,
+   bleibt aber LINKS ausgerichtet */
+.data-sys{
+  margin-left: 24px !important;   /* verschiebt gesamte Spalte */
+  justify-content: flex-start !important;
+  align-items: flex-start !important;
+}
+
+/* Gleichmäßiger Abstand ohne Zentrierung */
+.data-row{
+  gap: 24px !important;
+  justify-content: flex-start !important;
+}
+
+/* =========================================
+   Tabellenansicht: Datenart-Spalte breiter,
+   Pflegesystem-Spalte startet weiter rechts
+   (ohne Rechts-Zentrierung)
+   ========================================= */
+
+/* Erste Spalte (Datenart-Button) bekommt mehr Platz */
+.type-chip{
+  flex: 0 0 170px !important;
+  max-width: 170px !important;
+
+  /* volle Beschriftung erlauben */
+  white-space: nowrap !important;
+  overflow: visible !important;
+  text-overflow: clip !important;
+  display: inline-flex !important;
+}
+
+/* Abstand zwischen den Spalten erhöhen (schiebt System-Spalte nach rechts) */
+.data-row{
+  justify-content: flex-start !important;
+  gap: 28px !important;
+}
+
+/* System-Spalte bleibt linksbündig innerhalb ihrer Spalte */
+.data-sys{
+  margin-left: 0 !important;
+  justify-content: flex-start !important;
+  align-items: flex-start !important;
+}
+
+
+#mapHost { display: contents; }
+.status {
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: rgba(0,0,0,.18);
+  border: 1px solid rgba(255,255,255,.08);
+  color: var(--muted);
 }
