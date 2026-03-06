@@ -183,18 +183,22 @@ async function loadText(url){
       }
 
       function clearSelection(){
-        activeId = null;
-        svg.classList.remove('has-selection');
-        regions.forEach(g => g.classList.remove('is-active'));
-        selectedName.textContent = 'Keine Region gewählt';
-        selectedMeta.textContent = 'Klicke auf eine Fläche in der Karte.';
-        openBtn.disabled = true;
-        openBtn.onclick = null;
-        contactCard.style.display = 'none';
-        contactName.textContent = 'Ansprechpartner: –';
-        contactEmail.textContent = 'E-Mail: –';
-        closeDataPopup();
-      }
+  activeId = null;
+  svg.classList.remove('has-selection');
+  regions.forEach(g => g.classList.remove('is-active'));
+  selectedName.textContent = 'Keine Region gewählt';
+  selectedMeta.textContent = 'Klicke auf eine Fläche in der Karte.';
+
+  openBtn.style.display = 'none';
+  openBtn.disabled = true;
+  openBtn.onclick = null;
+
+  contactCard.style.display = 'none';
+  contactName.textContent = 'Ansprechpartner: –';
+  contactEmail.textContent = 'E-Mail: –';
+
+  closeDataPopup();
+}
 
       function selectById(id){
         if (activeId === id) {
