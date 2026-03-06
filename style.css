@@ -238,25 +238,27 @@ aside.card{
   white-space:nowrap;
 }
 
-.data-sys{ min-width:0; }
+.data-sys{
+  min-width:0;
+  width:100%;
+}
 
-/* Systeme untereinander */
 .sys-stack{
   display:flex;
   flex-direction:column;
   gap:6px;
-  align-items:flex-start;
+  align-items:stretch;   /* wichtig */
+  width:100%;            /* wichtig */
 }
 
 .sys-chip{
   display:block;
-  width:100%;            /* gleiche Breite innerhalb der Region */
+  width:100%;            /* alle Chips gleich breit */
   padding:6px 10px;
   border-radius:999px;
   background:var(--chip-bg);
   border:1px solid var(--chip-border);
   font-weight:700;
-
   white-space:normal;
   text-align:center;
 }
