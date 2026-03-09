@@ -194,7 +194,7 @@ async function loadText(url){
   openBtn.onclick = null;
 
   contactCard.style.display = 'none';
-  contactName.textContent = 'Ansprechpartner: –';
+  contactName.textContent = 'Ansprechperson: –';
   contactEmail.textContent = 'E-Mail: –';
 
   closeDataPopup();
@@ -218,7 +218,7 @@ async function loadText(url){
         selectedMeta.textContent = '';
 
         const c = CONTACTS[id] || {};
-        contactName.textContent = `Ansprechpartner: ${c.name || '–'}`;
+        contactName.textContent = `Ansprechperson: ${c.name || '–'}`;
         contactEmail.textContent = `E-Mail: ${c.email || '–'}`;
         contactCard.style.display = 'block';
 
