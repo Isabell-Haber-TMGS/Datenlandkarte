@@ -102,16 +102,16 @@ async function loadText(url){
 
       const DATA_CATALOG = window.DATA_CATALOG || {};
       const CONTACTS = {
-        saechsisch:              { name: '', email: '' },
-        erzgebirge:              { name: '', email: '' },
-        oberlausitz:             { name: '', email: '' },
-        leipzig:                 { name: '', email: '' },
+        saechsisch:              { name: 'Mandy Krebs, Yvonne Brückner', email: '' },
+        erzgebirge:              { name: 'Alexander Ohly', email: '' },
+        oberlausitz:             { name: 'Teresa Kalauch, Anne Heidrich', email: '' },
+        leipzig:                 { name: 'Anna Findeisen, Verena Daser, Hiskia Wiesner', email: '' },
         leipzig_stadt:           { name: '', email: '' },
-        dresden:                 { name: '', email: '' },
-        dresden_stadt:           { name: '', email: '' },
-        chemnitz_zwickau_region: { name: '', email: '' },
+        dresden:                 { name: 'Sindy Vogel, Ulrike Friedl-von Thun', email: '' },
+        dresden_stadt:           { name: 'Yvonne Seidemann (Tourismus), Katharina Böhme (Convention)', email: '' },
+        chemnitz_zwickau_region: { name: 'Benjamin Schreiter, Anna Kunke', email: '' },
         chemnitz_stadt:          { name: '', email: '' },
-        vogtland:                { name: '', email: '' }
+        vogtland:                { name: 'Laura Trommer', email: '' }
       };
 
       const regions = Array.from(svg.querySelectorAll('g.region[id]'));
