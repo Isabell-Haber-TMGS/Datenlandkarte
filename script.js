@@ -106,7 +106,7 @@ async function loadText(url){
         erzgebirge:              { name: 'Alexander Ohly', email: '' },
         oberlausitz:             { name: 'Teresa Kalauch, Anne Heidrich', email: '' },
         leipzig:                 { name: 'Anna Findeisen, Verena Daser, Hiskia Wiesner', email: '' },
-        leipzig_stadt:           { name: '', email: '' },
+        leipzig_stadt:           { name: 'Jamina Mertz, Daniel Almendinger', email: '' },
         dresden:                 { name: 'Sindy Vogel, Ulrike Friedl-von Thun', email: '' },
         dresden_stadt:           { name: 'Yvonne Seidemann (Tourismus), Katharina Böhme (Convention)', email: '' },
         chemnitz_zwickau_region: { name: 'Benjamin Schreiter, Anna Kunke', email: '' },
