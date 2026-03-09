@@ -7,42 +7,92 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+
   <main class="card map-wrap">
     <div class="tooltip" id="tooltip" role="status" aria-live="polite"></div>
+
     <div id="mapHost">
       <div class="status">Sachsenkarte wird geladen …</div>
     </div>
   </main>
 
   <aside class="card">
+
     <div style="padding:8px 14px 14px 14px; display:grid; grid-auto-rows:auto; align-content:start; gap:6px; min-height:0;"></div>
 
     <div class="panel">
+
       <div class="row" style="gap:10px; align-items:flex-start;">
         <div>
-          <div id="selectedName" style="font-weight:800;">Keine Region gewählt</div>
-          <div class="small" id="selectedMeta">Klicke auf eine Fläche in der Karte.</div>
+          <div id="selectedName" style="font-weight:800;">
+            Keine Region gewählt
+          </div>
+
+          <div class="small" id="selectedMeta">
+            Klicke auf eine Fläche in der Karte.
+          </div>
         </div>
-        <button class="btn" id="clearBtn" type="button" title="Auswahl zurücksetzen">↺</button>
+
+        <button
+          class="btn"
+          id="clearBtn"
+          type="button"
+          title="Auswahl zurücksetzen"
+        >
+          ↺
+        </button>
       </div>
 
       <div class="row" style="margin-top:4px;">
-        <button class="btn" id="openBtn" type="button" disabled>Website öffnen</button>
+        <!-- Button initial versteckt -->
+        <button
+          class="btn"
+          id="openBtn"
+          type="button"
+          hidden
+        >
+          Website öffnen
+        </button>
       </div>
 
       <div id="contactCard" style="margin-top:8px; display:none;">
-        <div id="contactName" style="font-weight:600;">Ansprechpartner: –</div>
-        <div class="small" id="contactEmail">E-Mail: –</div>
+        <div id="contactName" style="font-weight:600;">
+          Ansprechpartner: –
+        </div>
+
+        <div class="small" id="contactEmail">
+          E-Mail: –
+        </div>
       </div>
+
     </div>
 
-    <div class="data-popup" id="dataPopup" aria-live="polite">
-      <h2 id="dataPopupTitle">Datenübersicht</h2>
-      <div class="meta" id="dataPopupHint"></div>
-      <div class="data-list" id="dataPopupList" aria-label="Datenarten und Pflegesysteme"></div>
+    <div
+      class="data-popup"
+      id="dataPopup"
+      aria-live="polite"
+    >
+
+      <h2 id="dataPopupTitle">
+        Datenübersicht
+      </h2>
+
+      <div
+        class="meta"
+        id="dataPopupHint"
+      ></div>
+
+      <div
+        class="data-list"
+        id="dataPopupList"
+        aria-label="Datenarten und Pflegesysteme"
+      ></div>
+
     </div>
+
   </aside>
 
   <script src="script.js"></script>
+
 </body>
 </html>
