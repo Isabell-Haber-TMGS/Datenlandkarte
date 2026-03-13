@@ -1,14 +1,15 @@
 region_id,region_name,datenart,system
 leipzig,Leipzig Region,Angebote,SaTourN
-leipzig,Leipzig Region,Gastgeber,"SaTourN, tw. Feratel Deskline® und Destination Solution"
+leipzig,Leipzig Region,Gastgeber,"tw. Feratel Deskline® und Destination Solution"
 leipzig,Leipzig Region,Gastronomie,SaTourN/tw. Outdooractive
 leipzig,Leipzig Region,POIs,SaTourN/Outdooractive
 leipzig,Leipzig Region,Touren,Outdooractive
-leipzig,Leipzig Region,Veranstaltungen,Elodis/Kulturserver/SaTourN
+leipzig,Leipzig Region,Veranstaltungen,Kulturserver/SaTourN
 leipzig_stadt,Leipzig,Artikel,SaTourN
+leipzig_stadt,Leipzig,Gastgeber,"SaTourN (Convention-Partner)"
 leipzig_stadt,Leipzig,Gastronomie,SaTourN
 leipzig_stadt,Leipzig,POIs,SaTourN
-leipzig_stadt,Leipzig,Veranstaltungen,SaTourN
+leipzig_stadt,Leipzig,Veranstaltungen,SaTourN/Elodis
 dresden,Dresden Elbland,Gastgeber,künftig über neuen DMG-Hub
 dresden,Dresden Elbland,POIs,Outdooractive
 dresden,Dresden Elbland,Touren,Outdooractive
