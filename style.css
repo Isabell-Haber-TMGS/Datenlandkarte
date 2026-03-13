@@ -13,16 +13,18 @@
 html,body{height:100%}
 html{scrollbar-gutter:stable}
 
+[hidden]{
+  display:none !important;
+}
+
 body{
   margin:0;
   padding:16px;
   box-sizing:border-box;
   overflow-y:scroll;
-
   font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
   background:radial-gradient(1200px 700px at 20% 10%, #172244, var(--bg));
   color:var(--text);
-
   display:grid;
   grid-template-columns:1fr minmax(640px,820px);
   gap:16px;
@@ -99,7 +101,7 @@ body{
 }
 
 .region image,.region .logo,.region .label{
-  pointer-events:none
+  pointer-events:none;
 }
 
 .region .flaeche{
@@ -138,7 +140,7 @@ body{
 }
 
 .region.is-hover .innerline{
-  stroke:var(--stroke-hover)
+  stroke:var(--stroke-hover);
 }
 
 .region.is-active .flaeche{
@@ -204,6 +206,50 @@ aside.card{
 .btn:active{transform:translateY(1px)}
 .btn:hover{background:rgba(255,255,255,.10)}
 
+/* Abstand zwischen Website-Button und Leipzig-Umschalter */
+
+#openBtn{
+  margin-bottom:12px;
+}
+
+#leipzigModeSwitch{
+  margin-top:12px !important;
+}
+
+/* Leipzig Umschalter */
+
+.mode-switch{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+}
+
+.mode-btn{
+  opacity:.8;
+  padding:6px 14px;
+  font-weight:600;
+}
+
+.mode-btn.is-active{
+  opacity:1;
+  background:rgba(255,255,255,.18);
+  border-color:rgba(255,255,255,.35);
+}
+
+/* Kontaktblock */
+
+.contact-block{
+  margin-top:16px;
+}
+
+.contact-name{
+  font-weight:600;
+}
+
+.region-title{
+  font-weight:800;
+}
+
 /* Datenübersicht */
 
 .data-popup{
@@ -243,7 +289,6 @@ aside.card{
   grid-template-columns:180px 1fr;
   gap:16px;
   align-items:center;
-
   padding:14px 0;
   border-bottom:1px solid rgba(255,255,255,.08);
 }
@@ -282,7 +327,6 @@ aside.card{
 /* Mobile */
 
 @media (max-width:980px){
-
   body{
     grid-template-columns:1fr;
   }
@@ -300,80 +344,4 @@ aside.card{
     grid-template-columns:1fr;
     gap:6px;
   }
-
-  [hidden]{
-  display:none !important;
-}
-
-.mode-switch{
-  display:flex;
-  gap:8px;
-  margin-top:16px;
-  flex-wrap:wrap;
-}
-
-.mode-btn{
-  opacity:.8;
-}
-
-.mode-btn.is-active{
-  opacity:1;
-  border-color:rgba(255,255,255,.28);
-  background:rgba(255,255,255,.12);
-}
-
-}
-/* Panel Layout */
-
-.row-header{
-  align-items:flex-start;
-}
-
-/* Website Button */
-
-.row-website{
-  margin-top:8px;
-}
-
-/* Leipzig Umschalter */
-
-.mode-switch{
-  display:flex;
-  gap:8px;
-  margin-top:18px;     /* Abstand zum Website Button */
-  flex-wrap:wrap;
-}
-
-/* Switch Buttons */
-
-.mode-btn{
-  padding:6px 14px;
-  font-weight:600;
-}
-
-/* aktiver Button */
-
-.mode-btn.is-active{
-  background:rgba(255,255,255,.18);
-  border-color:rgba(255,255,255,.35);
-}
-
-/* Kontaktblock */
-
-.contact-block{
-  margin-top:16px;
-}
-
-.contact-name{
-  font-weight:600;
-}
-
-/* Region Titel */
-
-.region-title{
-  font-weight:800;
-}
-
-#openBtn{
-  margin-bottom: 12px;
 }
