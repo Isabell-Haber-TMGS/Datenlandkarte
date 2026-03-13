@@ -40,23 +40,23 @@ dresden_stadt,,Dresden,Kongresskalender,ZohoCRM-Modul
 chemnitz_stadt,,Chemnitz,Stammdaten,DMO-CRM / Datenbank
 chemnitz_stadt,,Chemnitz,Veranstaltungen,Event-Management-System
 chemnitz_stadt,,Chemnitz,Medien,DAM
-chemnitz_zwickau_region,,Chemnitz.Zwickau.Region.,POIs,SaTourN
-chemnitz_zwickau_region,,Chemnitz.Zwickau.Region.,Gastronomie,Outdooractive
-chemnitz_zwickau_region,,Chemnitz.Zwickau.Region.,Gastgeber,Feratel Deskline®
-chemnitz_zwickau_region,,Chemnitz.Zwickau.Region.,Veranstaltungen,SaTourN
-chemnitz_zwickau_region,,Chemnitz.Zwickau.Region.,Touren,Outdooractive
 chemnitz_zwickau_region,,Chemnitz.Zwickau.Region.,Angebote,Feratel Deskline®
-saechsisch,,SÃ¤chsische Schweiz,POIs,SaTourN
-saechsisch,,SÃ¤chsische Schweiz,Veranstaltungen,SaTourN
-saechsisch,,SÃ¤chsische Schweiz,Gastronomie,SaTourN
-saechsisch,,SÃ¤chsische Schweiz,Gastgeber,Feratel Deskline®
-saechsisch,,SÃ¤chsische Schweiz,Angebote,Feratel Deskline®
-saechsisch,,SÃ¤chsische Schweiz,Touren,Outdooractive
-erzgebirge,,Erzgebirge,POIs,Outdooractive
-erzgebirge,,Erzgebirge,Veranstaltungen,Outdooractive
-erzgebirge,,Erzgebirge,Touren,Outdooractive/Komoot
-erzgebirge,,Erzgebirge,Gastronomie,Outdooractive
-erzgebirge,,Erzgebirge,Gastgeber,Feratel Deskline®
-erzgebirge,,Erzgebirge,Angebote,Feratek Deskline®
+chemnitz_zwickau_region,,Chemnitz.Zwickau.Region.,Gastgeber,Feratel Deskline®
+chemnitz_zwickau_region,,Chemnitz.Zwickau.Region.,Gastronomie,Outdooractive
+chemnitz_zwickau_region,,Chemnitz.Zwickau.Region.,POIs,SaTourN
+chemnitz_zwickau_region,,Chemnitz.Zwickau.Region.,Touren,Outdooractive
+chemnitz_zwickau_region,,Chemnitz.Zwickau.Region.,Veranstaltungen,SaTourN
+saechsisch,,Sächsische Schweiz,Angebote,Feratel Deskline®
+saechsisch,,Sächsische Schweiz,Gastgeber,Feratel Deskline®
+saechsisch,,Sächsische Schweiz,Gastronomie,SaTourN
+saechsisch,,Sächsische Schweiz,POIs,SaTourN
+saechsisch,,Sächsische Schweiz,Touren,Outdooractive
+saechsisch,,Sächsische Schweiz,Veranstaltungen,SaTourN
+erzgebirge,,Erzgebirge,Angebote,Feratel Deskline®
 erzgebirge,,Erzgebirge,Erlebnisse,Feratel Deskline®
+erzgebirge,,Erzgebirge,Gastgeber,Feratel Deskline®
+erzgebirge,,Erzgebirge,Gastronomie,Outdooractive
+erzgebirge,,Erzgebirge,POIs,Outdooractive
 erzgebirge,,Erzgebirge,Shopartikel,Feratel Deskline®
+erzgebirge,,Erzgebirge,Touren,Outdooractive/Komoot
+erzgebirge,,Erzgebirge,Veranstaltungen,Outdooractive
