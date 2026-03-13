@@ -110,7 +110,7 @@ function initApp(){
   const contactCard = document.getElementById('contactCard');
   const contactList = document.getElementById('contactList');
 
-  const leipzigModeSwitch = document.getElementById('leipzigModeSwitch');
+  const cityModeSwitch = document.getElementById('cityModeSwitch');
   const modeConventionBtn = document.getElementById('modeConventionBtn');
   const modeOnlineBtn = document.getElementById('modeOnlineBtn');
 
@@ -168,28 +168,47 @@ function initApp(){
     chemnitz_stadt: 'https://www.chemnitz.travel'
   };
 
-  const LEIPZIG_STADT_MODES = {
+  const CITY_MODES = {
+  leipzig_stadt: {
     convention: {
       label: 'Convention',
+      buttonLabel: 'Online-Abteilung',
       website: 'https://www.leipzig-convention.de',
       contacts: [
-        { name: 'Anna Findeisen', role: 'Aufgabengebiet ergänzen', email: '' },
-        { name: 'Hiskia Wiesner', role: 'Aufgabengebiet ergänzen', email: '' }
+        { name: 'Yvonne Seidemann', role: 'Convention', email: 'yvonne@example.de' }
       ]
     },
     online: {
       label: 'Online-Abteilung',
       website: 'https://www.leipzig.travel',
       contacts: [
-        { name: 'Jamina Mertz', role: 'Aufgabengebiet ergänzen', email: '' },
-        { name: 'Daniel Almendinger', role: 'Aufgabengebiet ergänzen', email: '' }
+        { name: 'Name Online-Abteilung ergänzen', role: 'Online-Abteilung', email: 'online@example.de' }
       ]
     }
-  };
+  },
+
+  dresden_stadt: {
+    convention: {
+      label: 'Convention',
+      buttonLabel: 'Tourismus',
+      website: 'https://www.dresden-convention.de',
+      contacts: [
+        { name: 'Katharina Böhme', role: 'Convention', email: 'katharina@example.de' }
+      ]
+    },
+    online: {
+      label: 'Tourismus',
+      website: 'https://www.dresden.de',
+      contacts: [
+        { name: 'Yvonne Seidemann', role: 'Tourismus', email: 'yvonne@example.de' }
+      ]
+    }
+  }
+};
 
   const regions = Array.from(svg.querySelectorAll('g.region[id]'));
   let activeId = null;
-  let activeLeipzigMode = 'convention';
+  let activeCityMode = 'convention';
 
   function renderContacts(contacts){
     if(!contacts || !contacts.length){
@@ -239,51 +258,62 @@ function initApp(){
     );
   }
 
-  function renderLeipzigStadtMode(mode){
-    const config = LEIPZIG_STADT_MODES[mode];
-    if(!config) return;
+  function renderCityMode(regionId, mode){
+  const regionModes = CITY_MODES[regionId];
+  if(!regionModes) return;
 
-    activeLeipzigMode = mode;
+  const config = regionModes[mode];
+  if(!config) return;
 
-    if(leipzigModeSwitch){
-      leipzigModeSwitch.hidden = false;
-    }
+  activeCityMode = mode;
 
-    if(modeConventionBtn){
-      modeConventionBtn.classList.toggle('is-active', mode === 'convention');
-    }
-    if(modeOnlineBtn){
-      modeOnlineBtn.classList.toggle('is-active', mode === 'online');
-    }
-
-    selectedName.textContent = 'Leipzig (Stadt)';
-    selectedMeta.textContent = config.label;
-
-    renderContacts(config.contacts || []);
-
-    const allRows = DATA_CATALOG['leipzig_stadt'] || [];
-    const filteredRows = allRows.filter(r => (r.mode || '') === mode);
-
-    renderRows(
-      filteredRows,
-      `Datenübersicht: Leipzig (Stadt) – ${config.label}`,
-      filteredRows.length
-        ? 'Übersicht der Datenarten und des Pflegesystems für diese Einheit.'
-        : 'Für diese Ansicht sind noch keine Daten hinterlegt.'
-    );
-
-    if(config.website){
-      openBtn.hidden = false;
-      openBtn.disabled = false;
-      openBtn.onclick = () => {
-        window.open(config.website, '_blank', 'noopener,noreferrer');
-      };
+  if(cityModeSwitch){
+    cityModeSwitch.hidden = false;
+  }
+// BUTTON TEXT ANPASSEN
+  if(modeOnlineBtn){
+    if(regionId === "dresden_stadt"){
+      modeOnlineBtn.textContent = "Tourismus";
     }else{
-      openBtn.hidden = true;
-      openBtn.disabled = true;
-      openBtn.onclick = null;
+      modeOnlineBtn.textContent = "Online-Abteilung";
     }
   }
+    
+  if(modeConventionBtn){
+    modeConventionBtn.classList.toggle('is-active', mode === 'convention');
+  }
+  if(modeOnlineBtn){
+    modeOnlineBtn.classList.toggle('is-active', mode === 'online');
+  }
+
+  selectedName.textContent = regionId === 'leipzig_stadt' ? 'Leipzig (Stadt)' : 'Dresden (Stadt)';
+  selectedMeta.textContent = config.label;
+
+  renderContacts(config.contacts || []);
+
+  const allRows = DATA_CATALOG[regionId] || [];
+  const filteredRows = allRows.filter(r => (r.mode || '') === mode);
+
+  renderRows(
+    filteredRows,
+    `Datenübersicht: ${selectedName.textContent} – ${config.label}`,
+    filteredRows.length
+      ? 'Übersicht der Datenarten und des Pflegesystems für diese Einheit.'
+      : 'Für diese Ansicht sind noch keine Daten hinterlegt.'
+  );
+
+  if(config.website){
+    openBtn.hidden = false;
+    openBtn.disabled = false;
+    openBtn.onclick = () => {
+      window.open(config.website, '_blank', 'noopener,noreferrer');
+    };
+  }else{
+    openBtn.hidden = true;
+    openBtn.disabled = true;
+    openBtn.onclick = null;
+  }
+}
 
   function closeDataPopup(){
     dataPopup.classList.remove('is-open');
@@ -387,17 +417,17 @@ function initApp(){
     const name = g.dataset.name || g.id;
     const url = g.dataset.url || URLS[id] || '';
 
-    if(id === 'leipzig_stadt'){
-      if(leipzigModeSwitch){
-        leipzigModeSwitch.hidden = false;
-      }
-      renderLeipzigStadtMode(activeLeipzigMode);
-      return;
-    }else{
-      if(leipzigModeSwitch){
-        leipzigModeSwitch.hidden = true;
-      }
-    }
+    if(id === 'leipzig_stadt' || id === 'dresden_stadt'){
+  if(cityModeSwitch){
+    cityModeSwitch.hidden = false;
+  }
+  renderCityMode(id, activeCityMode);
+  return;
+}else{
+  if(cityModeSwitch){
+    cityModeSwitch.hidden = true;
+  }
+}
 
     selectedName.textContent = name;
     selectedMeta.textContent = '';
@@ -421,26 +451,26 @@ function initApp(){
   }
 
   if(modeConventionBtn){
-    modeConventionBtn.addEventListener('click', () => {
-      if(activeId === 'leipzig_stadt'){
-        if(leipzigModeSwitch){
-          leipzigModeSwitch.hidden = false;
-        }
-        renderLeipzigStadtMode('convention');
+  modeConventionBtn.addEventListener('click', () => {
+    if(activeId === 'leipzig_stadt' || activeId === 'dresden_stadt'){
+      if(cityModeSwitch){
+        cityModeSwitch.hidden = false;
       }
-    });
-  }
+      renderCityMode(activeId, 'convention');
+    }
+  });
+}
 
-  if(modeOnlineBtn){
-    modeOnlineBtn.addEventListener('click', () => {
-      if(activeId === 'leipzig_stadt'){
-        if(leipzigModeSwitch){
-          leipzigModeSwitch.hidden = false;
-        }
-        renderLeipzigStadtMode('online');
+if(modeOnlineBtn){
+  modeOnlineBtn.addEventListener('click', () => {
+    if(activeId === 'leipzig_stadt' || activeId === 'dresden_stadt'){
+      if(cityModeSwitch){
+        cityModeSwitch.hidden = false;
       }
-    });
-  }
+      renderCityMode(activeId, 'online');
+    }
+  });
+}
 
   (function fitViewBox(){
     const bbox = svg.getBBox();
