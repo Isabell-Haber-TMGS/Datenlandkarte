@@ -373,3 +373,7 @@ aside.card{
 .region-title{
   font-weight:800;
 }
+
+#openBtn{
+  margin-bottom: 12px;
+}
