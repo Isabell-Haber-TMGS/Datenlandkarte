@@ -482,7 +482,7 @@ document.addEventListener('DOMContentLoaded', () => {
   boot().catch(err => console.error(err));
 });
 ''',
-    "datenpopup_aktualisiert.csv": files["datenpopup_aktualisiert.csv"],
+    "datenpopup.csv": files["datenpopup.csv"],
 }
 
 for name, content in files.items():
