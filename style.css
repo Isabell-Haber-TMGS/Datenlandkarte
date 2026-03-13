@@ -308,7 +308,7 @@ aside.card{
 .mode-switch{
   display:flex;
   gap:8px;
-  margin-top:8px;
+  margin-top:16px;
   flex-wrap:wrap;
 }
 
