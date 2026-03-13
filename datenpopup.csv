@@ -1,56 +1,61 @@
-region_id,region_name,datenart,system
-leipzig,Leipzig Region,Angebote,SaTourN
-leipzig,Leipzig Region,Gastgeber,"tw. Feratel Deskline® und Destination Solution"
-leipzig,Leipzig Region,Gastronomie,SaTourN/tw. Outdooractive
-leipzig,Leipzig Region,POIs,SaTourN/Outdooractive
-leipzig,Leipzig Region,Touren,Outdooractive
-leipzig,Leipzig Region,Veranstaltungen,Kulturserver/SaTourN
-leipzig_stadt,Leipzig,Artikel,SaTourN
-leipzig_stadt,Leipzig,Gastgeber,"SaTourN (Convention-Partner)"
-leipzig_stadt,Leipzig,Gastronomie,SaTourN
-leipzig_stadt,Leipzig,POIs,SaTourN
-leipzig_stadt,Leipzig,Veranstaltungen,SaTourN/Elodis
-dresden,Dresden Elbland,Gastgeber,künftig über neuen DMG-Hub
-dresden,Dresden Elbland,POIs,Outdooractive
-dresden,Dresden Elbland,Touren,Outdooractive
-dresden,Dresden Elbland,Veranstaltungen,DMG-Veranstaltungskalender
-vogtland,Vogtland,Buchbare Unterkünfte,Feratel Deskline®
-vogtland,Vogtland,Gastronomie,Outdooractive/ThüCAT
-vogtland,Vogtland,Hotelbetriebe,Outdooractive/ThüCAT
-vogtland,Vogtland,POIs,Outdooractive/ThüCAT
-vogtland,Vogtland,Touren,Outdooractive
-vogtland,Vogtland,Veranstaltungen,Freizeitkalender Vogtland
-oberlausitz,Oberlausitz,Angebote,"Outdooractive, tw. regiondo"
-oberlausitz,Oberlausitz,Gastgeber,Feratel Deskline®
-oberlausitz,Oberlausitz,Gastronomie,Outdooractive
-oberlausitz,Oberlausitz,POIs,Outdooractive
-oberlausitz,Oberlausitz,Touren,Outdooractive
-oberlausitz,Oberlausitz,Veranstaltungen,Outdooractive
-dresden_stadt,Dresden,Gastgeber (Convention),SaTourN
-dresden_stadt,Dresden,Gastronomie,SaTourN
-dresden_stadt,Dresden,Kongresskalender,ZohoCRM-Modul
-dresden_stadt,Dresden,News,SaTourN
-dresden_stadt,Dresden,POIs,SaTourN
-dresden_stadt,Dresden,POIs (Convention),SaTourN
-dresden_stadt,Dresden,Touren,Komoot
-dresden_stadt,Dresden,Veranstaltungen,DMG-Veranstaltungskalender
-chemnitz_zwickau_region,Chemnitz.Zwickau.Region.,Angebote,Feratel Deskline®
-chemnitz_zwickau_region,Chemnitz.Zwickau.Region.,Gastgeber,Feratel Deskline®
-chemnitz_zwickau_region,Chemnitz.Zwickau.Region.,Gastronomie,Outdooractive
-chemnitz_zwickau_region,Chemnitz.Zwickau.Region.,POIs,SaTourN
-chemnitz_zwickau_region,Chemnitz.Zwickau.Region.,Touren,Outdooractive
-chemnitz_zwickau_region,Chemnitz.Zwickau.Region.,Veranstaltungen,SaTourN
-saechsisch,Sächsische Schweiz,Angebote,Feratel Deskline®
-saechsisch,Sächsische Schweiz,Gastgeber,Feratel Deskline®
-saechsisch,Sächsische Schweiz,Gastronomie,SaTourN
-saechsisch,Sächsische Schweiz,POIs,SaTourN
-saechsisch,Sächsische Schweiz,Touren,Outdooractive
-saechsisch,Sächsische Schweiz,Veranstaltungen,SaTourN
-erzgebirge,Erzgebirge,Angebote,Feratel Deskline®
-erzgebirge,Erzgebirge,Erlebnisse,Feratel Deskline®
-erzgebirge,Erzgebirge,Gastgeber,Feratel Deskline®
-erzgebirge,Erzgebirge,Gastronomie,Outdooractive
-erzgebirge,Erzgebirge,POIs,Outdooractive
-erzgebirge,Erzgebirge,Shopartikel,Feratel Deskline®
-erzgebirge,Erzgebirge,Touren,Outdooractive/Komoot
-erzgebirge,Erzgebirge,Veranstaltungen,Outdooractive
+region_id,mode,region_name,datenart,system
+leipzig,,Leipzig Region,POIs,SaTourN/Outdooractive
+leipzig,,Leipzig Region,Gastronomie,SaTourN/tw. Outdooractive
+leipzig,,Leipzig Region,Gastgeber,"SaTourN, tw. Feratel DesklineÂ® und Destination Solution"
+leipzig,,Leipzig Region,Veranstaltungen,Elodis/Kulturserver/SaTourN
+leipzig,,Leipzig Region,Touren,Outdooractive
+leipzig,,Leipzig Region,Angebote,SaTourN
+leipzig,,Leipzig Region,Artikel,SaTourN
+leipzig_stadt,online,Leipzig (Stadt),Stammdaten (City POIs),DMO-CRM / Datenbank
+leipzig_stadt,online,Leipzig (Stadt),Veranstaltungen (City),Event-Management-System
+leipzig_stadt,online,Leipzig (Stadt),Medien (City),DAM
+leipzig_stadt,convention,Leipzig (Stadt),Kongresskalender,ZohoCRM-Modul
+leipzig_stadt,convention,Leipzig (Stadt),Gastgeber (Locations/Tagungshotels),SaTourN
+leipzig_stadt,convention,Leipzig (Stadt),POIs (Agenturen/Servicedienstleister),SaTourN
+dresden,,Dresden Elbland,POIs,Outdooractive
+dresden,,Dresden Elbland,Touren,Outdooractive
+dresden,,Dresden Elbland,Veranstaltungen,Veranstaltungskalender der DMG
+dresden,,Dresden Elbland,Gastgeber,kÃ¼nftig Ã¼ber neuen DMG-Hub
+vogtland,,Vogtland,POIs,Outdooractive/ThÃ¼CAT
+vogtland,,Vogtland,Touren,Outdooractive
+vogtland,,Vogtland,Hotelbetriebe,Outdooractive/ThÃ¼CAT
+vogtland,,Vogtland,Gastronomie,Outdooractive/ThÃ¼CAT
+vogtland,,Vogtland,Veranstaltungen,Freizeitkalender Vogtland
+vogtland,,Vogtland,Buchbare UnterkÃ¼nfte,Feratel DesklineÂ®
+oberlausitz,,Oberlausitz,POIs,Outdooractive
+oberlausitz,,Oberlausitz,Veranstaltungen,Outdooractive
+oberlausitz,,Oberlausitz,Touren,Outdooractive
+oberlausitz,,Oberlausitz,Gastronomie,Outdooractive
+oberlausitz,,Oberlausitz,Gastgeber,Feratel DesklineÂ®
+oberlausitz,,Oberlausitz,Angebote,"Outdooractive, tw. regiondo"
+dresden_stadt,,Dresden,POIs,SaTourN
+dresden_stadt,,Dresden,Gastronomie,SaTourN
+dresden_stadt,,Dresden,Touren,Komoot
+dresden_stadt,,Dresden,Veranstaltungen,Veranstaltungskalender der DMG
+dresden_stadt,,Dresden,Gastgeber (Locations/Tagungshotels),SaTourN
+dresden_stadt,,Dresden,POIs (Agenturen/Servicedienstleister),SaTourN
+dresden_stadt,,Dresden,News,SaTourN
+dresden_stadt,,Dresden,Kongresskalender,ZohoCRM-Modul
+chemnitz_stadt,,Chemnitz,Stammdaten,DMO-CRM / Datenbank
+chemnitz_stadt,,Chemnitz,Veranstaltungen,Event-Management-System
+chemnitz_stadt,,Chemnitz,Medien,DAM
+chemnitz_zwickau_region,,Chemnitz.Zwickau.Region.,POIs,SaTourN
+chemnitz_zwickau_region,,Chemnitz.Zwickau.Region.,Gastronomie,Outdooractive
+chemnitz_zwickau_region,,Chemnitz.Zwickau.Region.,Gastgeber,Feratel DesklineÂ®
+chemnitz_zwickau_region,,Chemnitz.Zwickau.Region.,Veranstaltungen,SaTourN
+chemnitz_zwickau_region,,Chemnitz.Zwickau.Region.,Touren,Outdooractive
+chemnitz_zwickau_region,,Chemnitz.Zwickau.Region.,Angebote,Feratel DesklineÂ®
+saechsisch,,SÃ¤chsische Schweiz,POIs,SaTourN
+saechsisch,,SÃ¤chsische Schweiz,Veranstaltungen,SaTourN
+saechsisch,,SÃ¤chsische Schweiz,Gastronomie,SaTourN
+saechsisch,,SÃ¤chsische Schweiz,Gastgeber,Feratel DesklineÂ®
+saechsisch,,SÃ¤chsische Schweiz,Angebote,Feratel DesklineÂ®
+saechsisch,,SÃ¤chsische Schweiz,Touren,Outdooractive
+erzgebirge,,Erzgebirge,POIs,Outdooractive
+erzgebirge,,Erzgebirge,Veranstaltungen,Outdooractive
+erzgebirge,,Erzgebirge,Touren,Outdooractive/Komoot
+erzgebirge,,Erzgebirge,Gastronomie,Outdooractive
+erzgebirge,,Erzgebirge,Gastgeber,Feratel DesklineÂ®
+erzgebirge,,Erzgebirge,Angebote,Feratek DesklineÂ®
+erzgebirge,,Erzgebirge,Erlebnisse,Feratel DesklineÂ®
+erzgebirge,,Erzgebirge,Shopartikel,Feratel DesklineÂ®
