@@ -129,11 +129,13 @@ function initApp(){
       { name: 'Anne Heidrich', role: 'Aufgabengebiet ergänzen', email: 'anne@example.de' }
     ],
     leipzig: [
-      { name: 'Anna Findeisen', role: 'Aufgabengebiet ergänzen', email: 'anna@example.de' },
-      { name: 'Verena Daser', role: 'Aufgabengebiet ergänzen', email: 'verena@example.de' },
-      { name: 'Hiskia Wiesner', role: 'Aufgabengebiet ergänzen', email: 'hiskia@example.de' }
+      { name: 'Verena Daser', role: 'Aufgabengebiet ergänzen', email: 'verena@example.de' }
     ],
-    leipzig_stadt: [],
+    leipzig_stadt: [
+      { name: 'Anna Findeisen', role: 'Aufgabengebiet ergänzen', email: '' },
+      { name: 'Hiskia Wiesner', role: 'Aufgabengebiet ergänzen', email: '' },
+      { name: 'Christina Witt', role: 'Aufgabengebiet ergänzen', email: '' }
+    ],
     dresden: [
       { name: 'Sindy Vogel', role: 'Aufgabengebiet ergänzen', email: 'sindy@example.de' },
       { name: 'Ulrike Friedl-von Thun', role: 'Aufgabengebiet ergänzen', email: 'ulrike@example.de' }
