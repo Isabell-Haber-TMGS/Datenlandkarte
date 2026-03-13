@@ -129,7 +129,8 @@ function initApp(){
       { name: 'Anne Heidrich', role: 'Aufgabengebiet ergänzen', email: 'anne@example.de' }
     ],
     leipzig: [
-      { name: 'Verena Daser', role: 'Aufgabengebiet ergänzen', email: 'verena@example.de' }
+      { name: 'Verena Daser', role: 'Aufgabengebiet ergänzen', email: 'verena@example.de' },
+      { name: 'Christina Witt', role: 'Aufgabengebiet ergänzen', email: '' },
     ],
     leipzig_stadt: [
       { name: 'Anna Findeisen', role: 'Aufgabengebiet ergänzen', email: '' },
@@ -172,14 +173,16 @@ function initApp(){
       label: 'Convention',
       website: 'https://www.leipzig-convention.de',
       contacts: [
-        { name: 'Yvonne Seidemann', role: 'Convention', email: 'yvonne@example.de' }
+        { name: 'Anna Findeisen', role: 'Aufgabengebiet ergänzen', email: '' },
+        { name: 'Hiskia Wiesner', role: 'Aufgabengebiet ergänzen', email: '' }
       ]
     },
     online: {
       label: 'Online-Abteilung',
       website: 'https://www.leipzig.travel',
       contacts: [
-        { name: 'Name Online-Abteilung ergänzen', role: 'Online-Abteilung', email: 'online@example.de' }
+        { name: 'Jamina Mertz', role: 'Aufgabengebiet ergänzen', email: '' },
+        { name: 'Daniel Almendinger', role: 'Aufgabengebiet ergänzen', email: '' }
       ]
     }
   };
