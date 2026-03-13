@@ -9,6 +9,7 @@
 <body>
   <main class="card map-wrap">
     <div class="tooltip" id="tooltip" role="status" aria-live="polite"></div>
+
     <div id="mapWrap">
       <div class="status">Sachsenkarte wird geladen …</div>
     </div>
@@ -16,6 +17,7 @@
 
   <aside class="card">
     <div style="padding:8px 14px 14px 14px; display:grid; grid-auto-rows:auto; align-content:start; gap:6px; min-height:0;"></div>
+
     <div class="panel">
       <div class="row" style="gap:10px; align-items:flex-start;">
         <div>
@@ -29,11 +31,15 @@
         <button class="btn" id="openBtn" type="button" hidden disabled>Website öffnen</button>
       </div>
 
-      <div id="leipzigModeSwitch" class="mode-switch" hidden>
-        <button class="btn mode-btn is-active" id="modeConventionBtn" type="button">Convention</button>
-        <button class="btn mode-btn" id="modeOnlineBtn" type="button">Online-Abteilung</button>
-      </div>
-
+<div id="leipzigModeSwitch" class="mode-switch" hidden>
+  <button class="btn mode-btn is-active" id="modeConventionBtn" type="button">
+    Convention
+  </button>
+  <button class="btn mode-btn" id="modeOnlineBtn" type="button">
+    Online-Abteilung
+  </button>
+</div>
+      
       <div id="contactCard" style="margin-top:8px; display:none;">
         <div id="contactName" style="font-weight:600;">Ansprechperson: –</div>
         <div class="small" id="contactEmail">E-Mail: –</div>
