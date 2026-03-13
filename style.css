@@ -323,3 +323,53 @@ aside.card{
 }
 
 }
+/* Panel Layout */
+
+.row-header{
+  align-items:flex-start;
+}
+
+/* Website Button */
+
+.row-website{
+  margin-top:8px;
+}
+
+/* Leipzig Umschalter */
+
+.mode-switch{
+  display:flex;
+  gap:8px;
+  margin-top:18px;     /* Abstand zum Website Button */
+  flex-wrap:wrap;
+}
+
+/* Switch Buttons */
+
+.mode-btn{
+  padding:6px 14px;
+  font-weight:600;
+}
+
+/* aktiver Button */
+
+.mode-btn.is-active{
+  background:rgba(255,255,255,.18);
+  border-color:rgba(255,255,255,.35);
+}
+
+/* Kontaktblock */
+
+.contact-block{
+  margin-top:16px;
+}
+
+.contact-name{
+  font-weight:600;
+}
+
+/* Region Titel */
+
+.region-title{
+  font-weight:800;
+}
