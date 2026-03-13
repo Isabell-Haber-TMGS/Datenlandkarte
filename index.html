@@ -19,26 +19,41 @@
     <div style="padding:8px 14px 14px 14px; display:grid; grid-auto-rows:auto; align-content:start; gap:6px; min-height:0;"></div>
 
     <div class="panel">
-      <div class="row" style="gap:10px; align-items:flex-start;">
-        <div>
-          <div id="selectedName" style="font-weight:800;">Keine Region gewählt</div>
-          <div class="small" id="selectedMeta">Klicke auf eine Fläche in der Karte.</div>
-        </div>
-        <button class="btn" id="clearBtn" type="button" title="Auswahl zurücksetzen">↺</button>
-      </div>
+  <div class="header-row">
+    <div class="header-main">
+      <div id="selectedName" class="region-name">Keine Region gewählt</div>
+      <div class="small" id="selectedMeta">Klicke auf eine Fläche in der Karte.</div>
+    </div>
 
-      <div class="row" style="margin-top:4px;">
-        <button class="btn" id="openBtn" type="button" hidden disabled>Website öffnen</button>
-      </div>
+    <div class="header-actions">
+      <button class="btn" id="clearBtn" type="button" title="Auswahl zurücksetzen">↺</button>
 
-      <div id="leipzigModeSwitch" class="mode-switch" hidden>
-        <button class="btn mode-btn is-active" id="modeConventionBtn" type="button">
-          Convention
-        </button>
-        <button class="btn mode-btn" id="modeOnlineBtn" type="button">
-          Online-Abteilung
+      <div id="contactCard" class="contact-inline" style="display:none;">
+        <button id="contactToggle" class="contact-toggle-inline" type="button" aria-expanded="false">
+          <span>Ansprechpersonen</span>
+          <span id="contactToggleIcon">▾</span>
         </button>
       </div>
+    </div>
+  </div>
+
+  <div id="contactListWrap" class="contact-list-wrap" hidden>
+    <div id="contactList" class="contact-list"></div>
+  </div>
+
+  <div class="row" style="margin-top:4px;">
+    <button class="btn" id="openBtn" type="button" hidden disabled>Website öffnen</button>
+  </div>
+
+  <div id="leipzigModeSwitch" class="mode-switch" hidden>
+    <button class="btn mode-btn is-active" id="modeConventionBtn" type="button">
+      Convention
+    </button>
+    <button class="btn mode-btn" id="modeOnlineBtn" type="button">
+      Online-Abteilung
+    </button>
+  </div>
+</div>
 
       <div id="contactCard" class="contact-card" style="display:none;">
         <div class="contact-title">Ansprechpersonen</div>
