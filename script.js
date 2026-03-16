@@ -118,40 +118,31 @@ function initApp(){
 
   const CONTACTS = {
     saechsisch: [
-      { name: 'Mandy Krebs', role: 'Aufgabengebiet ergänzen', email: 'mandy@example.de' },
-      { name: 'Yvonne Brückner', role: 'Aufgabengebiet ergänzen', email: 'yvonne@example.de' }
+      { name: 'Mandy Krebs', role: 'Marketing | MTB', email: '' },
+      { name: 'Yvonne Brückner', role: 'Datenmanagement', email: '' }
     ],
     erzgebirge: [
-      { name: 'Alexander Ohly', role: 'Aufgabengebiet ergänzen', email: 'alexander@example.de' }
+      { name: 'Alexander Ohly', role: 'Projektmanagement Internet & Online-Marketing', email: '' }
     ],
     oberlausitz: [
-      { name: 'Teresa Kalauch', role: 'Aufgabengebiet ergänzen', email: 'teresa@example.de' },
-      { name: 'Anne Heidrich', role: 'Aufgabengebiet ergänzen', email: 'anne@example.de' }
+      { name: 'Teresa Kalauch', role: 'Bereichsleitung Digitalisierung', email: '' },
+      { name: 'Anne Heidrich', role: 'Datenmanagement Outdooractive', email: '' }
     ],
     leipzig: [
-      { name: 'Verena Daser', role: 'Aufgabengebiet ergänzen', email: 'verena@example.de' },
-      { name: 'Christina Witt', role: 'Aufgabengebiet ergänzen', email: '' },
-    ],
-    leipzig_stadt: [
-      { name: 'Anna Findeisen', role: 'Aufgabengebiet ergänzen', email: '' },
-      { name: 'Hiskia Wiesner', role: 'Aufgabengebiet ergänzen', email: '' },
-      { name: 'Christina Witt', role: 'Aufgabengebiet ergänzen', email: '' }
+      { name: 'Verena Daser', role: 'Projektmanagerin Region Leipzig', email: '' },
+      { name: 'Christina Witt', role: 'Projektmanagerin Region Leipzig', email: '' }
     ],
     dresden: [
-      { name: 'Sindy Vogel', role: 'Aufgabengebiet ergänzen', email: 'sindy@example.de' },
-      { name: 'Ulrike Friedl-von Thun', role: 'Aufgabengebiet ergänzen', email: 'ulrike@example.de' }
-    ],
-    dresden_stadt: [
-      { name: 'Yvonne Seidemann', role: 'Tourismus', email: 'yvonne@example.de' },
-      { name: 'Katharina Böhme', role: 'Convention', email: 'katharina@example.de' }
+      { name: 'Sindy Vogel', role: 'Geschäftsführung', email: '' },
+      { name: 'Ulrike Friedl-von Thun', role: 'Mitarbeiterin Netzwerk Tourist-Informationen und Datenmanagement', email: '' }
     ],
     chemnitz_zwickau_region: [
-      { name: 'Benjamin Schreiter', role: 'Aufgabengebiet ergänzen', email: 'benjamin@example.de' },
-      { name: 'Anna Kunke', role: 'Aufgabengebiet ergänzen', email: 'anna.k@example.de' }
+      { name: 'Benjamin Schreiter', role: 'Marketing/Digitalisierung', email: '' },
+      { name: 'Anna Kunke', role: 'Aufgabengebiet ergänzen', email: '' }
     ],
     chemnitz_stadt: [],
     vogtland: [
-      { name: 'Laura Trommer', role: 'Aufgabengebiet ergänzen', email: 'laura@example.de' }
+      { name: 'Laura Trommer', role: 'Online-Managerin (Digitalisierung, KI, Online-Marketing)', email: '' }
     ]
   };
 
@@ -175,16 +166,16 @@ function initApp(){
       buttonLabel: 'Online-Abteilung',
       website: 'https://www.leipzig-convention.com/',
       contacts: [
-        { name: 'Hiskia Wiesner', role: 'Convention', email: '' },
-        { name: 'Anna Findeisen', role: 'Convention', email: '' }
+        { name: 'Hiskia Wiesner', role: 'Leiterin Conventions', email: '' },
+        { name: 'Anna Findeisen', role: 'Juniorprojektmanagerin Online-Marketing', email: '' }
       ]
     },
     online: {
       label: 'Online-Abteilung',
       website: 'https://www.leipzig.travel',
       contacts: [
-        { name: 'Jamina Mertz', role: 'Convention', email: '' },
-        { name: 'Daniel Almendinger', role: 'Convention', email: '' }
+        { name: 'Jamina Mertz', role: 'Leiterin Digitalstrategie und Digitales Marketing', email: '' },
+        { name: 'Daniel Almendinger', role: 'Senior-Projektmanager Online-Marketing', email: '' }
       ]
     }
   },
@@ -195,14 +186,14 @@ function initApp(){
       buttonLabel: 'Tourismus',
       website: 'https://www.dresden-convention.de',
       contacts: [
-        { name: 'Katharina Böhme', role: 'Convention', email: 'katharina@example.de' }
+        { name: 'Katharina Böhme', role: 'Managerin MICE Marketing', email: 'katharina@example.de' }
       ]
     },
     online: {
       label: 'Tourismus',
       website: 'https://www.dresden.de',
       contacts: [
-        { name: 'Yvonne Seidemann', role: 'Tourismus', email: 'yvonne@example.de' }
+        { name: 'Yvonne Seidemann', role: 'Online Marketing Managerin', email: 'yvonne@example.de' }
       ]
     }
   }
