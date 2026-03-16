@@ -186,7 +186,7 @@ function initApp(){
       buttonLabel: 'Tourismus',
       website: 'https://www.dresden-convention.de',
       contacts: [
-        { name: 'Katharina Böhme', role: 'Managerin MICE Marketing', email: 'katharina@example.de' }
+        { name: 'Katharina Böhme', role: 'Managerin MICE Marketing', email: '' }
       ]
     },
     online: {
