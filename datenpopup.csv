@@ -33,10 +33,10 @@ dresden_stadt,online,Dresden,Gastronomie,SaTourN
 dresden_stadt,online,Dresden,POIs,SaTourN
 dresden_stadt,online,Dresden,Touren,Komoot
 dresden_stadt,online,Dresden,Veranstaltungen,Veranstaltungskalender der DMG
-dresden_stadt,convention,Dresden,Gastgeber (Locations/Tagungshotels),SaTourN
+dresden_stadt,convention,Dresden,Gastgeber (MICE),SaTourN
 dresden_stadt,convention,Dresden,Kongresskalender,ZohoCRM-Modul
 dresden_stadt,convention,Dresden,News,SaTourN
-dresden_stadt,convention,Dresden,POIs (Agenturen/Servicedienstleister),SaTourN
+dresden_stadt,convention,Dresden,POIs (MICE),SaTourN
 chemnitz_stadt,,Chemnitz,Stammdaten,DMO-CRM / Datenbank
 chemnitz_stadt,,Chemnitz,Veranstaltungen,Event-Management-System
 chemnitz_stadt,,Chemnitz,Medien,DAM
