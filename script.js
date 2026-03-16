@@ -193,7 +193,7 @@ function initApp(){
       label: 'Tourismus',
       website: 'https://www.visit-dresden-elbland.de/',
       contacts: [
-        { name: 'Yvonne Seidemann', role: 'Online Marketing Managerin', email: 'yvonne@example.de' }
+        { name: 'Yvonne Seidemann', role: 'Online Marketing Managerin', email: '' }
       ]
     }
   }
