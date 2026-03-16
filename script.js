@@ -173,7 +173,7 @@ function initApp(){
     convention: {
       label: 'Convention',
       buttonLabel: 'Online-Abteilung',
-      website: 'https://www.leipzig-convention.de',
+      website: 'https://www.leipzig-convention.com/',
       contacts: [
         { name: 'Hiskia Wiesner', role: 'Convention', email: '' },
         { name: 'Anna Findeisen', role: 'Convention', email: '' }
