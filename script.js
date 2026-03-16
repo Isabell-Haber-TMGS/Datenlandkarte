@@ -166,8 +166,7 @@ function initApp(){
       buttonLabel: 'Online-Abteilung',
       website: 'https://www.leipzig-convention.com/',
       contacts: [
-        { name: 'Hiskia Wiesner', role: 'Leiterin Conventions', email: '' },
-        { name: 'Anna Findeisen', role: 'Juniorprojektmanagerin Online-Marketing', email: '' }
+        { name: 'Hiskia Wiesner', role: 'Leiterin Conventions', email: '' }
       ]
     },
     online: {
@@ -175,7 +174,8 @@ function initApp(){
       website: 'https://www.leipzig.travel',
       contacts: [
         { name: 'Jamina Mertz', role: 'Leiterin Digitalstrategie und Digitales Marketing', email: '' },
-        { name: 'Daniel Almendinger', role: 'Senior-Projektmanager Online-Marketing', email: '' }
+        { name: 'Daniel Almendinger', role: 'Senior-Projektmanager Online-Marketing', email: '' },
+        { name: 'Anna Findeisen', role: 'Juniorprojektmanagerin Online-Marketing', email: '' }
       ]
     }
   },
