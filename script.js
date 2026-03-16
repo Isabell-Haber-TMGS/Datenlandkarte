@@ -151,7 +151,7 @@ function initApp(){
     leipzig: 'https://www.leipzig.travel',
     leipzig_stadt: 'https://www.leipzig.travel',
     dresden: 'https://www.dresden-elbland.de',
-    dresden_stadt: 'https://www.dresden.de',
+    dresden_stadt: 'https://www.visit-dresden-elbland.de/',
     vogtland: 'https://www.vogtland-tourismus.de',
     saechsisch: 'https://www.saechsische-schweiz.de',
     erzgebirge: 'https://www.erzgebirge-tourismus.de',
@@ -184,14 +184,14 @@ function initApp(){
     convention: {
       label: 'Convention',
       buttonLabel: 'Tourismus',
-      website: 'https://www.dresden-convention.de',
+      website: 'https://www.dresden-convention.com/',
       contacts: [
         { name: 'Katharina Böhme', role: 'Managerin MICE Marketing', email: '' }
       ]
     },
     online: {
       label: 'Tourismus',
-      website: 'https://www.dresden.de',
+      website: 'https://www.visit-dresden-elbland.de/',
       contacts: [
         { name: 'Yvonne Seidemann', role: 'Online Marketing Managerin', email: 'yvonne@example.de' }
       ]
