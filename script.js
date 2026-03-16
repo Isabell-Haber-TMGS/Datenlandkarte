@@ -175,14 +175,16 @@ function initApp(){
       buttonLabel: 'Online-Abteilung',
       website: 'https://www.leipzig-convention.de',
       contacts: [
-        { name: 'Yvonne Seidemann', role: 'Convention', email: 'yvonne@example.de' }
+        { name: 'Hiskia Wiesner', role: 'Convention', email: '' },
+        { name: 'Anna Findeisen', role: 'Convention', email: '' }
       ]
     },
     online: {
       label: 'Online-Abteilung',
       website: 'https://www.leipzig.travel',
       contacts: [
-        { name: 'Name Online-Abteilung ergänzen', role: 'Online-Abteilung', email: 'online@example.de' }
+        { name: 'Jamina Mertz', role: 'Convention', email: '' },
+        { name: 'Daniel Almendinger', role: 'Convention', email: '' }
       ]
     }
   },
