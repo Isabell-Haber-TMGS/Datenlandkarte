@@ -309,8 +309,19 @@ function initApp(){
 }
 
   function closeDataPopup(){
+  if(dataPopup){
     dataPopup.classList.remove('is-open');
   }
+  if(dataPopupTitle){
+    dataPopupTitle.textContent = 'Datenübersicht';
+  }
+  if(dataPopupHint){
+    dataPopupHint.textContent = '';
+  }
+  if(dataPopupList){
+    dataPopupList.innerHTML = '';
+  }
+}
 
   function showTooltip(text, sub){
     tooltip.innerHTML = `<strong>${escapeHtml(text)}</strong>${sub ? `<span class="muted">${escapeHtml(sub)}</span>` : ''}`;
@@ -364,35 +375,54 @@ function initApp(){
   }
 
   function clearSelection(){
-    activeId = null;
-    activeLeipzigMode = 'convention';
+  activeId = null;
+  activeCityMode = 'convention';
 
-    svg.classList.remove('has-selection');
-    regions.forEach(g => g.classList.remove('is-active'));
+  svg.classList.remove('has-selection');
+  regions.forEach(g => g.classList.remove('is-active'));
 
-    selectedName.textContent = 'Keine Region gewählt';
-    selectedMeta.textContent = 'Klicke auf eine Fläche in der Karte.';
+  selectedName.textContent = 'Keine Region gewählt';
+  selectedMeta.textContent = 'Klicke auf eine Fläche in der Karte.';
 
-    openBtn.hidden = true;
-    openBtn.disabled = true;
-    openBtn.onclick = null;
+  openBtn.hidden = true;
+  openBtn.disabled = true;
+  openBtn.onclick = null;
 
-    if(leipzigModeSwitch){
-      leipzigModeSwitch.hidden = true;
-    }
-
-    if(modeConventionBtn){
-      modeConventionBtn.classList.add('is-active');
-    }
-    if(modeOnlineBtn){
-      modeOnlineBtn.classList.remove('is-active');
-    }
-
-    contactCard.style.display = 'none';
-    if(contactList) contactList.innerHTML = '';
-
-    closeDataPopup();
+  if(cityModeSwitch){
+    cityModeSwitch.hidden = true;
   }
+
+  if(modeConventionBtn){
+    modeConventionBtn.classList.add('is-active');
+  }
+  if(modeOnlineBtn){
+    modeOnlineBtn.classList.remove('is-active');
+    modeOnlineBtn.textContent = 'Online-Abteilung';
+  }
+
+  if(contactCard){
+    contactCard.style.display = 'none';
+  }
+  if(contactList){
+    contactList.innerHTML = '';
+  }
+
+  const contactListWrap = document.getElementById('contactListWrap');
+  const contactToggle = document.getElementById('contactToggle');
+  const contactToggleIcon = document.getElementById('contactToggleIcon');
+
+  if(contactListWrap){
+    contactListWrap.hidden = true;
+  }
+  if(contactToggle){
+    contactToggle.setAttribute('aria-expanded', 'false');
+  }
+  if(contactToggleIcon){
+    contactToggleIcon.textContent = '▾';
+  }
+
+  closeDataPopup();
+}
 
   function selectById(id){
     if(activeId === id){
