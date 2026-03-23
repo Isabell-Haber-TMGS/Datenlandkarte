@@ -1,72 +1,16 @@
 <svg xmlns="http://www.w3.org/2000/svg" aria-label="Sachsenkarte mit DMO-Regionen" id="sachsenMap" role="img" viewBox="0 0 2048 1467">
 <defs>
-  <filter height="160%" id="softGlow" width="160%" x="-30%" y="-30%">
-    <feGaussianBlur result="blur" stdDeviation="2.2"/>
-    <feColorMatrix in="blur" result="glow" type="matrix" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 0.38 0"/>
-    <feMerge>
-      <feMergeNode in="glow"/>
-      <feMergeNode in="SourceGraphic"/>
-    </feMerge>
-  </filter>
-  <style>
-    #sachsenMap {
-      background: transparent;
-      color-scheme: dark;
-      font-family: Arial, Helvetica, sans-serif;
-    }
-    .region {
-      cursor: pointer;
-      outline: none;
-    }
-    .region .hit {
-      fill: rgba(255,255,255,0.001);
-      stroke: transparent;
-      stroke-width: 16;
-      vector-effect: non-scaling-stroke;
-    }
-    .region .flaeche {
-      fill: rgba(255,255,255,0.001);
-      stroke: #dceec6;
-      stroke-width: 4;
-      vector-effect: non-scaling-stroke;
-      filter: url(#softGlow);
-      transition: fill 120ms ease-in-out, stroke 120ms ease-in-out, stroke-width 120ms ease-in-out;
-    }
-    .region:hover .flaeche,
-    .region:focus .flaeche,
-    .region.is-active .flaeche {
-      fill: rgba(220,238,198,0.16);
-      stroke: #efffd7;
-      stroke-width: 5;
-    }
-    .grenze-gestrichelt {
-      fill: none;
-      stroke: #dceec6;
-      stroke-width: 4;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-      vector-effect: non-scaling-stroke;
-      filter: url(#softGlow);
-      pointer-events: none;
-    }
-  </style>
-  <script><![CDATA[
-    function regionToggle(evt) {
-      const el = evt.currentTarget;
-      el.classList.toggle('is-active');
-      const detail = { id: el.id, name: el.dataset.name || el.id, url: el.dataset.url || '' };
-      try {
-        el.dispatchEvent(new CustomEvent('regionclick', { bubbles: true, detail }));
-      } catch (e) {}
-    }
-    function regionKey(evt) {
-      if (evt.key === 'Enter' || evt.key === ' ') {
-        evt.preventDefault();
-        regionToggle(evt);
-      }
-    }
-  ]]></script>
-</defs>
+<filter height="160%" id="softGlow" width="160%" x="-30%" y="-30%">
+<feGaussianBlur result="blur" stdDeviation="3"></feGaussianBlur>
+<feColorMatrix in="blur" result="glow" type="matrix" values="1 0 0 0 0
+                    0 1 0 0 0
+                    0 0 1 0 0
+                    0 0 0 0.45 0"></feColorMatrix>
+<feMerge>
+<feMergeNode in="glow"></feMergeNode>
+<feMergeNode in="SourceGraphic"></feMergeNode>
+</feMerge>
+</filter>
 <g class="region" id="saechsisch" data-name="Sächsische Schweiz" data-url="https://www.saechsische-schweiz.de/" tabindex="0" onclick="regionToggle(evt)" onkeydown="regionKey(evt)">
   <title>Sächsische Schweiz</title>
   <path class="hit" d="M 1608 580 L 1590 578 L 1580 586 L 1578 589 L 1573 590 L 1569 580 L 1562 575 L 1561 573 L 1551 568 L 1548 568 L 1546 566 L 1541 566 L 1540 565 L 1534 565 L 1524 580 L 1520 584 L 1512 583 L 1506 577 L 1500 566 L 1482 580 L 1477 580 L 1476 579 L 1462 580 L 1458 579 L 1453 576 L 1450 571 L 1448 575 L 1448 585 L 1447 586 L 1424 585 L 1417 592 L 1414 592 L 1411 586 L 1411 589 L 1408 592 L 1405 593 L 1405 595 L 1403 597 L 1404 616 L 1401 623 L 1397 626 L 1392 626 L 1380 638 L 1370 638 L 1371 650 L 1365 657 L 1352 668 L 1343 669 L 1339 666 L 1337 662 L 1333 664 L 1329 664 L 1325 670 L 1318 676 L 1313 678 L 1308 678 L 1302 676 L 1302 698 L 1294 708 L 1293 711 L 1298 712 L 1301 714 L 1301 724 L 1299 729 L 1299 734 L 1297 736 L 1293 736 L 1295 744 L 1295 754 L 1297 757 L 1299 767 L 1301 770 L 1302 776 L 1304 778 L 1305 783 L 1313 791 L 1313 806 L 1315 811 L 1321 818 L 1324 827 L 1326 828 L 1338 828 L 1343 833 L 1343 835 L 1336 844 L 1333 846 L 1327 847 L 1323 850 L 1325 855 L 1327 857 L 1331 858 L 1335 865 L 1342 866 L 1345 868 L 1353 870 L 1358 869 L 1362 859 L 1366 855 L 1372 853 L 1379 853 L 1388 851 L 1392 848 L 1397 835 L 1401 831 L 1413 827 L 1418 822 L 1422 822 L 1424 824 L 1441 831 L 1444 834 L 1451 829 L 1467 829 L 1471 827 L 1475 817 L 1481 812 L 1505 805 L 1509 803 L 1511 800 L 1523 791 L 1544 788 L 1559 779 L 1562 776 L 1565 769 L 1566 764 L 1566 755 L 1565 753 L 1568 751 L 1576 751 L 1587 743 L 1593 743 L 1598 746 L 1603 752 L 1607 753 L 1633 745 L 1635 743 L 1637 737 L 1651 740 L 1657 738 L 1657 723 L 1659 719 L 1666 712 L 1666 708 L 1663 703 L 1661 702 L 1648 703 L 1639 698 L 1637 698 L 1636 696 L 1634 696 L 1630 693 L 1617 693 L 1614 692 L 1611 689 L 1612 682 L 1605 678 L 1605 674 L 1611 669 L 1619 665 L 1619 660 L 1611 661 L 1600 667 L 1594 667 L 1579 658 L 1577 655 L 1580 646 L 1580 641 L 1578 637 L 1588 628 L 1592 617 L 1591 612 L 1586 609 L 1586 606 L 1595 601 L 1596 597 L 1601 589 L 1608 587 Z"/>
