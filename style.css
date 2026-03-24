@@ -2,7 +2,7 @@
   --bg:#0b0f1a;
   --text:#e8eefc;
   --muted:#a9b6d6;
-  --stroke:rgba(255,255,255,.20);
+  --stroke:rgba(255,255,255,.16);
   --stroke-hover:rgba(255,255,255,.55);
   --shadow:0 10px 30px rgba(0,0,0,.35);
   --panel-bg:rgba(0,0,0,.18);
@@ -94,21 +94,28 @@ body{
 
 /* Karte */
 
-.region .flaeche,.region .hit{
+.region .flaeche,
+.region .hit{
   cursor:pointer;
   vector-effect:non-scaling-stroke;
   pointer-events:fill;
 }
 
-.region image,.region .logo,.region .label{
+.region image,
+.region .logo,
+.region .label{
   pointer-events:none;
 }
 
+/* Fläche schließt Mikrofugen, aber zeichnet keine sichtbare Kontur */
 .region .flaeche{
   fill:rgba(110,160,255,.18);
-  stroke:var(--stroke);
-  stroke-width:0.7;
-  transition:fill .18s ease,stroke .18s ease,filter .18s ease,opacity .18s ease;
+  stroke:rgba(110,160,255,.18);
+  stroke-width:0.2;
+  stroke-linejoin:round;
+  paint-order:stroke fill;
+  vector-effect:non-scaling-stroke;
+  transition:fill .18s ease, stroke .18s ease, opacity .18s ease;
 }
 
 .region .hit{
@@ -117,53 +124,41 @@ body{
   stroke-width:18;
 }
 
-.region .grenze{
-  fill:none;
-  stroke:#fff;
-  stroke-width:0.7;
-  stroke-linejoin:round;
-}
-
-.region .innerline{
+/* globale Linien */
+#grenzen .grenze{
   fill:none;
   stroke:var(--stroke);
-  stroke-width:0.7;
+  stroke-width:0.6;
+  stroke-linejoin:round;
+  stroke-linecap:round;
+  vector-effect:non-scaling-stroke;
+  pointer-events:none;
+}
+
+#innenlinien .innerline{
+  fill:none;
+  stroke:var(--stroke);
+  stroke-width:0.6;
   vector-effect:non-scaling-stroke;
   pointer-events:none;
   opacity:.9;
 }
 
-.region.is-hover .flaeche{
-  fill:rgba(110,160,255,.30);
-  stroke:var(--stroke-hover);
-  filter:drop-shadow(0 8px 18px rgba(0,0,0,.28));
+#innenlinien .innerline.dashed{
+  stroke-dasharray:6 5;
+  stroke-linecap:round;
 }
 
+/* Hover */
 .region.is-hover .flaeche{
   fill:rgba(110,160,255,.30);
-  stroke:var(--stroke-hover);
-  stroke-width:1.7;
+  stroke:rgba(110,160,255,.30);
 }
 
+/* Aktiv */
 .region.is-active .flaeche{
   fill:rgba(255,210,80,.32);
-  stroke:rgba(255,210,80,.75);
-  stroke-width:1.8;
-}
-
-.region.is-active .innerline{
-  stroke:rgba(255,210,80,.75);
-}
-
-.region path.innerline.dashed{
-  fill:none;
-  stroke:var(--stroke);
-  stroke-width:1.2;
-  vector-effect:non-scaling-stroke;
-  pointer-events:none;
-  opacity:.9;
-  stroke-dasharray:8 6;
-  stroke-linecap:round;
+  stroke:rgba(255,210,80,.32);
 }
 
 svg.has-selection .region:not(.is-active) .flaeche{
