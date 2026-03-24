@@ -155,8 +155,15 @@ body{
   stroke:rgba(255,210,80,.75);
 }
 
-.region .innerline.dashed{
-  stroke-dasharray:4 4;
+.region path.innerline.dashed{
+  fill:none;
+  stroke:var(--stroke);
+  stroke-width:1.2;
+  vector-effect:non-scaling-stroke;
+  pointer-events:none;
+  opacity:.9;
+  stroke-dasharray:8 6;
+  stroke-linecap:round;
 }
 
 svg.has-selection .region:not(.is-active) .flaeche{
