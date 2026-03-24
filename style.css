@@ -146,7 +146,6 @@ body{
 #chemnitz_stadt .flaeche,
 #dresden_stadt .flaeche{
   fill:rgba(140,180,255,.22);
-  stroke:inherit;
 }
 
 /* Hover */
