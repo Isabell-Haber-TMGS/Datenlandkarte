@@ -107,7 +107,7 @@ body{
 .region .flaeche{
   fill:rgba(110,160,255,.18);
   stroke:var(--stroke);
-  stroke-width:1.5;
+  stroke-width:1.2;
   transition:fill .18s ease,stroke .18s ease,filter .18s ease,opacity .18s ease;
 }
 
