@@ -107,7 +107,7 @@ body{
 .region .flaeche{
   fill:rgba(110,160,255,.18);
   stroke:var(--stroke);
-  stroke-width:1.2;
+  stroke-width:1;
   transition:fill .18s ease,stroke .18s ease,filter .18s ease,opacity .18s ease;
 }
 
@@ -120,14 +120,14 @@ body{
 .region .grenze{
   fill:none;
   stroke:#fff;
-  stroke-width:1.2;
+  stroke-width:1;
   stroke-linejoin:round;
 }
 
 .region .innerline{
   fill:none;
   stroke:var(--stroke);
-  stroke-width:1.2;
+  stroke-width:0.8;
   vector-effect:non-scaling-stroke;
   pointer-events:none;
   opacity:.9;
