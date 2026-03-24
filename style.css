@@ -2,7 +2,7 @@
   --bg:#0b0f1a;
   --text:#e8eefc;
   --muted:#a9b6d6;
-  --stroke:rgba(255,255,255,.28);
+  --stroke:rgba(255,255,255,.20);
   --stroke-hover:rgba(255,255,255,.55);
   --shadow:0 10px 30px rgba(0,0,0,.35);
   --panel-bg:rgba(0,0,0,.18);
@@ -107,7 +107,7 @@ body{
 .region .flaeche{
   fill:rgba(110,160,255,.18);
   stroke:var(--stroke);
-  stroke-width:1;
+  stroke-width:0.7;
   transition:fill .18s ease,stroke .18s ease,filter .18s ease,opacity .18s ease;
 }
 
@@ -120,14 +120,14 @@ body{
 .region .grenze{
   fill:none;
   stroke:#fff;
-  stroke-width:1;
+  stroke-width:0.7;
   stroke-linejoin:round;
 }
 
 .region .innerline{
   fill:none;
   stroke:var(--stroke);
-  stroke-width:0.8;
+  stroke-width:0.7;
   vector-effect:non-scaling-stroke;
   pointer-events:none;
   opacity:.9;
