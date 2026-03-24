@@ -155,6 +155,10 @@ body{
   stroke:rgba(255,210,80,.75);
 }
 
+.region .innerline.dashed{
+  stroke-dasharray:4 4;
+}
+
 svg.has-selection .region:not(.is-active) .flaeche{
   opacity:.40;
 }
