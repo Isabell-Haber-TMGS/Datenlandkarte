@@ -142,6 +142,13 @@ body{
   stroke-linecap:round;
 }
 
+#leipzig_stadt .flaeche,
+#chemnitz_stadt .flaeche,
+#dresden_stadt .flaeche{
+  fill:rgba(140,180,255,.32);
+  stroke:rgba(140,180,255,.45);
+}
+
 /* Hover */
 .region.is-hover .flaeche{
   fill:rgba(110,160,255,.30);
