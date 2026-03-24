@@ -139,13 +139,16 @@ body{
   filter:drop-shadow(0 8px 18px rgba(0,0,0,.28));
 }
 
-.region.is-hover .innerline{
+.region.is-hover .flaeche{
+  fill:rgba(110,160,255,.30);
   stroke:var(--stroke-hover);
+  stroke-width:1.7;
 }
 
 .region.is-active .flaeche{
   fill:rgba(255,210,80,.32);
   stroke:rgba(255,210,80,.75);
+  stroke-width:1.8;
 }
 
 .region.is-active .innerline{
