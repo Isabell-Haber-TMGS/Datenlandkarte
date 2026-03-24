@@ -145,8 +145,8 @@ body{
 #leipzig_stadt .flaeche,
 #chemnitz_stadt .flaeche,
 #dresden_stadt .flaeche{
-  fill:rgba(140,180,255,.32);
-  stroke:rgba(140,180,255,.45);
+  fill:rgba(140,180,255,.24);
+  stroke:rgba(140,180,255,.35);
 }
 
 /* Hover */
