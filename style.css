@@ -2,7 +2,7 @@
   --bg:#0b0f1a;
   --text:#e8eefc;
   --muted:#a9b6d6;
-  --stroke:rgba(255,255,255,.16);
+  --stroke:rgba(255,255,255,.24);
   --stroke-hover:rgba(255,255,255,.55);
   --shadow:0 10px 30px rgba(0,0,0,.35);
   --panel-bg:rgba(0,0,0,.18);
@@ -111,24 +111,17 @@ body{
 .region .flaeche{
   fill:rgba(110,160,255,.18);
   stroke:rgba(110,160,255,.18);
-  stroke-width:0.2;
+  stroke-width:0.18;
   stroke-linejoin:round;
   paint-order:stroke fill;
   vector-effect:non-scaling-stroke;
   transition:fill .18s ease, stroke .18s ease, opacity .18s ease;
 }
 
-.region .hit{
-  fill:transparent;
-  stroke:transparent;
-  stroke-width:18;
-}
-
-/* globale Linien */
 #grenzen .grenze{
   fill:none;
   stroke:var(--stroke);
-  stroke-width:0.6;
+  stroke-width:0.85;
   stroke-linejoin:round;
   stroke-linecap:round;
   vector-effect:non-scaling-stroke;
@@ -138,10 +131,10 @@ body{
 #innenlinien .innerline{
   fill:none;
   stroke:var(--stroke);
-  stroke-width:0.6;
+  stroke-width:0.85;
   vector-effect:non-scaling-stroke;
   pointer-events:none;
-  opacity:.9;
+  opacity:.95;
 }
 
 #innenlinien .innerline.dashed{
