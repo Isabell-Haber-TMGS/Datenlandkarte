@@ -129,11 +129,11 @@ function initApp(){
       { name: 'Anne Heidrich', role: 'Datenmanagement Outdooractive', email: '' }
     ],
     leipzig: [
-      { name: 'Verena Daser', role: 'Projektmanagerin Region Leipzig', email: '' },
+      { name: 'Verena Daser', role: 'Projektmanagerin Region Leipzig', email: 'v.daser@ltm-leipzig.de' },
       { name: 'Christina Witt', role: 'Projektmanagerin Region Leipzig', email: '' }
     ],
     dresden: [
-      { name: 'Sindy Vogel', role: 'Geschäftsführung', email: '' },
+      { name: 'Sindy Vogel', role: 'Geschäftsführung', email: 'sindy.vogel@elbland.de' },
       { name: 'Ulrike Friedl-von Thun', role: 'Mitarbeiterin Netzwerk Tourist-Informationen und Datenmanagement', email: '' }
     ],
     chemnitz_zwickau_region: [
@@ -166,7 +166,7 @@ function initApp(){
       buttonLabel: 'Online-Abteilung',
       website: 'https://www.leipzig-convention.com/',
       contacts: [
-        { name: 'Hiskia Wiesner', role: 'Leiterin Conventions', email: '' }
+        { name: 'Hiskia Wiesner', role: 'Leiterin Conventions', email: 'h.wiesner@ltm-leipzig.de' }
       ]
     },
     online: {
@@ -175,7 +175,7 @@ function initApp(){
       contacts: [
         { name: 'Jamina Mertz', role: 'Leiterin Digitalstrategie und Digitales Marketing', email: '' },
         { name: 'Daniel Almendinger', role: 'Senior-Projektmanager Online-Marketing', email: '' },
-        { name: 'Anna Findeisen', role: 'Juniorprojektmanagerin Online-Marketing', email: '' }
+        { name: 'Anna Findeisen', role: 'Juniorprojektmanagerin Online-Marketing', email: 'a.findeisen@ltm-leipzig.de' }
       ]
     }
   },
