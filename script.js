@@ -125,8 +125,8 @@ function initApp(){
       { name: 'Alexander Ohly', role: 'Projektmanagement Internet & Online-Marketing', email: '' }
     ],
     oberlausitz: [
-      { name: 'Teresa Kalauch', role: 'Bereichsleitung Digitalisierung', email: '' },
-      { name: 'Anne Heidrich', role: 'Datenmanagement Outdooractive', email: '' }
+      { name: 'Teresa Kalauch', role: 'Bereichsleitung Digitalisierung', email: 'teresa.kalauch@oberlausitz.com' },
+      { name: 'Anne Heidrich', role: 'Datenmanagement Outdooractive', email: 'anne.heidrich@oberlausitz.com' }
     ],
     leipzig: [
       { name: 'Verena Daser', role: 'Projektmanagerin Region Leipzig', email: 'v.daser@ltm-leipzig.de' },
