@@ -142,7 +142,7 @@ function initApp(){
     ],
     chemnitz_stadt: [],
     vogtland: [
-      { name: 'Laura Trommer', role: 'Online-Managerin (Digitalisierung, KI, Online-Marketing)', email: '' }
+      { name: 'Laura Trommer', role: 'Online-Managerin (Digitalisierung, KI, Online-Marketing)', email: 'trommer@vogtland-tourismus.de>' }
     ]
   };
 
