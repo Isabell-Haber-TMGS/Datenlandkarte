@@ -118,11 +118,11 @@ function initApp(){
 
   const CONTACTS = {
     saechsisch: [
-      { name: 'Mandy Krebs', role: 'Marketing | MTB', email: '' },
-      { name: 'Yvonne Brückner', role: 'Datenmanagement', email: '' }
+      { name: 'Mandy Krebs', role: 'Marketing | MTB', email: 'm.krebs@saechsische-schweiz.de' },
+      { name: 'Yvonne Brückner', role: 'Datenmanagement', email: 'y.brueckner@saechsische-schweiz.de' }
     ],
     erzgebirge: [
-      { name: 'Alexander Ohly', role: 'Projektmanagement Internet & Online-Marketing', email: '' }
+      { name: 'Alexander Ohly', role: 'Projektmanagement Internet & Online-Marketing', email: 'a.ohly@erzgebirge-tourismus.de' }
     ],
     oberlausitz: [
       { name: 'Teresa Kalauch', role: 'Bereichsleitung Digitalisierung', email: 'teresa.kalauch@oberlausitz.com' },
@@ -130,15 +130,15 @@ function initApp(){
     ],
     leipzig: [
       { name: 'Verena Daser', role: 'Projektmanagerin Region Leipzig', email: 'v.daser@ltm-leipzig.de' },
-      { name: 'Christina Witt', role: 'Projektmanagerin Region Leipzig', email: '' }
+      { name: 'Christina Witt', role: 'Projektmanagerin Region Leipzig', email: 'c.witt@ltm-leipzig.de' }
     ],
     dresden: [
       { name: 'Sindy Vogel', role: 'Geschäftsführung', email: 'sindy.vogel@elbland.de' },
-      { name: 'Ulrike Friedl-von Thun', role: 'Mitarbeiterin Netzwerk Tourist-Informationen und Datenmanagement', email: '' }
+      { name: 'Ulrike Friedl-von Thun', role: 'Mitarbeiterin Netzwerk Tourist-Informationen und Datenmanagement', email: 'netzwerkmanager@elbland.de' }
     ],
     chemnitz_zwickau_region: [
-      { name: 'Benjamin Schreiter', role: 'Marketing/Digitalisierung', email: '' },
-      { name: 'Anna Kunke', role: 'Aufgabengebiet ergänzen', email: '' }
+      { name: 'Benjamin Schreiter', role: 'Marketing/Digitalisierung', email: 'schreiter@chemnitz-zwickau-region.de' },
+      { name: 'Anna Kunke', role: 'Aufgabengebiet ergänzen', email: 'kunke@chemnitz-zwickau-region.de' }
     ],
     chemnitz_stadt: [],
     vogtland: [
