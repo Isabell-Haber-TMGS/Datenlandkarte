@@ -66,6 +66,13 @@ body{
   user-select:none;
 }
 
+.map-footer{
+  text-align:center;
+  color:var(--muted);
+  font-size:12px;
+  padding-top:4px;
+}
+
 /* Tooltip */
 
 .tooltip{
