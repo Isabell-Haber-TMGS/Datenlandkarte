@@ -173,8 +173,8 @@ function initApp(){
       label: 'Online-Abteilung',
       website: 'https://www.leipzig.travel',
       contacts: [
-        { name: 'Jamina Mertz', role: 'Leiterin Digitalstrategie und Digitales Marketing', email: '' },
-        { name: 'Daniel Almendinger', role: 'Senior-Projektmanager Online-Marketing', email: '' },
+        { name: 'Jamina Mertz', role: 'Leiterin Digitalstrategie und Digitales Marketing', email: 'j.mertz@ltm-leipzig.de' },
+        { name: 'Daniel Almendinger', role: 'Senior-Projektmanager Online-Marketing', email: 'd.almendinger@ltm-leipzig.de' },
         { name: 'Anna Findeisen', role: 'Juniorprojektmanagerin Online-Marketing', email: 'a.findeisen@ltm-leipzig.de' }
       ]
     }
@@ -186,15 +186,13 @@ function initApp(){
       buttonLabel: 'Tourismus',
       website: 'https://www.dresden-convention.com/',
       contacts: [
-        { name: 'Katharina Böhme', role: 'Managerin MICE Marketing', email: '' }
+        { name: 'Katharina Böhme', role: 'Managerin MICE Marketing', email: 'katharina.boehme@marketing.dresden.de' }
       ]
     },
     online: {
       label: 'Tourismus',
       website: 'https://www.visit-dresden-elbland.de/',
-      contacts: [
-        { name: 'Yvonne Seidemann', role: 'Online Marketing Managerin', email: '' }
-      ]
+      contacts: []
     }
   }
 };
