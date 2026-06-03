@@ -138,7 +138,7 @@ function initApp(){
     ],
     chemnitz_zwickau_region: [
       { name: 'Benjamin Schreiter', role: 'Marketing/Digitalisierung', email: 'schreiter@chemnitz-zwickau-region.de' },
-      { name: 'Anna Kunke', role: 'Aufgabengebiet ergänzen', email: 'kunke@chemnitz-zwickau-region.de' }
+      { name: 'Anna Kunke', role: 'Digitalmanagerin', email: 'kunke@chemnitz-zwickau-region.de' }
     ],
     chemnitz_stadt: [],
     vogtland: [
